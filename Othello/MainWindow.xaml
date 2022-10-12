@@ -5,8 +5,104 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Othello"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Othello"
+        Width="1000"
+        >
+    <Window.Foreground>
+        <ImageBrush/>
+    </Window.Foreground>
+    <DockPanel>
 
-    </Grid>
+        <ToolBar DockPanel.Dock="Top">
+            <ToolBar.Foreground>
+                <ImageBrush TileMode="Tile"/>
+            </ToolBar.Foreground>
+            <Button Content="New Game"/>
+            <Separator/>
+            <Button Content="Exit"/>
+        </ToolBar>
+
+        <Grid DockPanel.Dock="Left">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="1"/>
+                    <GradientStop Color="White" Offset="0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="200" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="0" Width="50" Background="Black" />
+            <!--<DockPanel Grid.Column="0">-->
+            <StackPanel Grid.Column="0" VerticalAlignment="Stretch" Background= "#FF563700">
+                <Label Content="Round: " FontFamily="Impact" />
+                <Label Content="Player 1:" Foreground="White" />
+                <Label Content="White: " Foreground="White"/>
+                <Separator/>
+                <Label Content="Player 2:"/>
+                <Label Content="Black: " />
+                <Separator/>
+            </StackPanel>
+            <!--<Grid Grid.Column="1">-->
+            <!--<Grid Grid.Column="1">-->
+            <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition MaxWidth="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>-->
+
+            <Border Grid.Column="1" BorderThickness="10" BorderBrush="black" Width="500" Height="500" Margin="50">
+
+                <Grid Background="#FF009819">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </Border>
+            <StackPanel Grid.Column="1" HorizontalAlignment="Left" Width="540" Margin="110,50,0,50">
+                <Label Content="1" FontSize="40"/>
+                <Label Content="2" FontSize="40"/>
+                <Label Content="3" FontSize="40"/>
+                <Label Content="4" FontSize="40"/>
+                <Label Content="5" FontSize="40"/>
+                <Label Content="6" FontSize="40"/>
+                <Label Content="7" FontSize="40"/>
+                <Label Content="8" FontSize="40"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" VerticalAlignment="Top" Orientation="Horizontal" Width="500" Height="53">
+                <Label Content="1" FontSize="40" Margin="15 0 15 0"/>
+                <Label Content="2" FontSize="40" Margin="15 0 15 0"/>
+                <Label Content="3" FontSize="40" Margin="15 0 15 0"/>
+                <Label Content="4" FontSize="40" Margin="15 0 15 0"/>
+                <Label Content="5" FontSize="40" Margin="15 0 15 0"/>
+                <Label Content="6" FontSize="40" Margin="15 0 15 0"/>
+                <Label Content="7" FontSize="40" Margin="15 0 15 0"/>
+                <Label Content="8" FontSize="40" Margin="15 0 15 0"/>
+            </StackPanel>
+            <!--</Grid>-->
+        </Grid>
+
+        <!--</DockPanel>-->
+
+
+    </DockPanel>
+
 </Window>
