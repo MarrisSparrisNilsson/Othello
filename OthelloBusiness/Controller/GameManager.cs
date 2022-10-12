@@ -25,9 +25,9 @@ namespace OthelloBusiness.Controller
             gameBoard[3, 4] = Disk.BLACK;
             gameBoard[4, 3] = Disk.BLACK;
             gameBoard[4, 4] = Disk.WHITE;
-            computerThread = new Thread(Play);
-            computerThread.Start();
-            computerThread.Name = "computerThread";
+            //computerThread = new Thread(Play);
+            //computerThread.Start();
+            //computerThread.Name = "computerThread";
         }
         //public void Start()
         //{
@@ -49,69 +49,69 @@ namespace OthelloBusiness.Controller
 
             //    Monitor.Wait(board);
 
-            try
+            //try
+            //{
+            Player player = player1;
+            while (isPlaying)
             {
-                Player player = player1;
-                while (isPlaying)
+                Console.WriteLine($"Round: {roundCount++}");
+                int numOfChanges = 0;
+
+                // player.GetName() ?
+                // player.GetDisk() ?
+                // Synlighet?
+                Console.WriteLine(player.Name + " - " + player.Disk);
+                validMoves = board.ValidMoves(player, ref gameBoard);
+                if (validMoves.Count == 0)
                 {
-                    Console.WriteLine($"Round: {roundCount++}");
-                    int numOfChanges = 0;
-
-                    // player.GetName() ?
-                    // player.GetDisk() ?
-                    // Synlighet?
-                    Console.WriteLine(player.Name + " - " + player.Disk);
-                    validMoves = board.ValidMoves(player, ref gameBoard);
-                    if (validMoves.Count == 0)
-                    {
-                        skippedRounds++;
-                    }
-                    else
-                    {
-                        //Thread.Sleep(2000);
-                        numOfChanges = player.RequestMove(ref gameBoard, validMoves);
-                        //numOfChanges = board.MakeMove(player, move[0], move[1], ref gameBoard);
-                        player.numOfDisks += numOfChanges + 1;
-                        skippedRounds = 0;
-                    }
-                    if (skippedRounds == 2)
-                    {
-                        isPlaying = false;
-                        continue;
-                    }
-                    player = player2.Name == player.Name ? player1 : player2;
-                    player.numOfDisks -= numOfChanges;
-
-                    // Nedan används för att växla till gui tråden. alltså primärtråden.
-                    //App.Current.Dispatcher.Invoke(() =>
-                    //{
-                    //    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
-                    //});
-
+                    skippedRounds++;
                 }
-                Monitor.PulseAll(board);
-                Stop(); // varför funkar ej detta?
-                if (player1.numOfDisks == player2.numOfDisks)
-                    Console.WriteLine("The game ended with a draw");
                 else
                 {
-                    Console.WriteLine($"\n{player1.Name} got: {player1.numOfDisks} disks!");
-                    Console.WriteLine($"{player2.Name} got: {player2.numOfDisks} disks!");
-                    Console.WriteLine(
-                        $"Congratulations " +
-                        $"{(player1.numOfDisks > player2.numOfDisks ? player1.Name : player2.Name)}" +
-                        $" won the game of Othello!");
+                    //Thread.Sleep(2000);
+                    numOfChanges = player.RequestMove(ref gameBoard, validMoves);
+                    //numOfChanges = board.MakeMove(player, move[0], move[1], ref gameBoard);
+                    player.numOfDisks += numOfChanges + 1;
+                    skippedRounds = 0;
                 }
+                if (skippedRounds == 2)
+                {
+                    isPlaying = false;
+                    continue;
+                }
+                player = player2.Name == player.Name ? player1 : player2;
+                player.numOfDisks -= numOfChanges;
+
+                // Nedan används för att växla till gui tråden. alltså primärtråden.
+                //App.Current.Dispatcher.Invoke(() =>
+                //{
+                //    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
+                //});
+
             }
-            catch (ThreadInterruptedException)
+            //Monitor.PulseAll(board);
+            //Stop(); // varför funkar ej detta?
+            if (player1.numOfDisks == player2.numOfDisks)
+                Console.WriteLine("The game ended with a draw");
+            else
             {
-                Console.WriteLine("Computer player is done.");
+                Console.WriteLine($"\n{player1.Name} got: {player1.numOfDisks} disks!");
+                Console.WriteLine($"{player2.Name} got: {player2.numOfDisks} disks!");
+                Console.WriteLine(
+                    $"Congratulations " +
+                    $"{(player1.numOfDisks > player2.numOfDisks ? player1.Name : player2.Name)}" +
+                    $" won the game of Othello!");
             }
             //}
+            //catch (ThreadInterruptedException)
+            //{
+            //    Console.WriteLine("Computer player is done.");
+            //}
+            //}
         }
-        public void Stop()
-        {
-            computerThread.Interrupt();
-        }
+        //public void Stop()
+        //{
+        //    computerThread.Interrupt();
+        //}
     }
 }

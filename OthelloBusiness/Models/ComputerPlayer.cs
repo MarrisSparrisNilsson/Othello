@@ -19,10 +19,22 @@ namespace OthelloBusiness.Models
             }
             else
             {
-                Point point = validMoves[random.Next(validMoves.Count)];
                 int[] position = new int[2];
-                position[0] = point.Y;
-                position[1] = point.X;
+                foreach (Point move in validMoves)
+                {
+                    if ((move.Y == 0 && move.X == 0) || (move.Y == 0 && move.X == 7) || (move.Y == 7 && move.X == 0) || (move.Y == 7 && move.X == 7))
+                    {
+                        position[0] = move.Y;
+                        position[1] = move.X;
+                        break;
+                    }
+                }
+                if (position[0] != 0 && position[1] != 0 || position[0] != 7 && position[1] != 0 || position[0] != 0 && position[1] != 7 || position[0] != 7 && position[1] != 7)
+                {
+                    Point point = validMoves[random.Next(validMoves.Count)];
+                    position[0] = point.Y;
+                    position[1] = point.X;
+                }
                 Console.WriteLine($"{Name} placed a disk at position: ({position[0]}, {position[1]})");
                 return MakeMove(position[0], position[1], ref gameBoard, validMoves);
             }
