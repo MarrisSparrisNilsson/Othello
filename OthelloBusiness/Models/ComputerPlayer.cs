@@ -35,8 +35,8 @@ namespace OthelloBusiness.Models
                     position[1] = point.X;
                 }
                 Console.WriteLine($"{Name} placed a disk at position: ({position[0]}, {position[1]})");
-                gameBoard = MakeMove(position[0], position[1], gameBoard, validMoves);
-                return gameBoard;
+
+                return MakeMove(position[0], position[1], gameBoard, validMoves);
             });
         }
 

@@ -25,8 +25,8 @@
                 position[0] = int.Parse(moves[0]);
                 position[1] = int.Parse(moves[1]);
                 //return await MakeMove(position[0], position[1], gameBoard, validMoves);
-                gameBoard = MakeMove(position[0], position[1], gameBoard, validMoves);
-                return gameBoard;
+
+                return MakeMove(position[0], position[1], gameBoard, validMoves);
             });
         }
 
