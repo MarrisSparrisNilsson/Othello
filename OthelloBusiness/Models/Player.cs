@@ -15,10 +15,10 @@
         public Disk Disk { get; set; }
 
 
-        public abstract Task<Disk[,]> RequestMove(Disk[,] gameBoard, List<Point> validMoves);
+        public abstract Task<Disk[,]> RequestMoveAsync(Disk[,] gameBoard, List<Point> validMoves);
         //{
         //Inhämta Player Name från SetupGameDialog och WinnerDialog
         //}
-        public abstract Task<Disk[,]> MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves);
+        public abstract Disk[,] MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves);
     }
 }

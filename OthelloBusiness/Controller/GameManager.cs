@@ -77,7 +77,7 @@ namespace OthelloBusiness.Controller
                 if (validMoves.Count == 0) skippedRounds++;
                 else
                 {
-                    gameBoard = await player.RequestMove(gameBoard, validMoves);
+                    gameBoard = await player.RequestMoveAsync(gameBoard, validMoves);
                     //numOfChanges = board.MakeMove(player, move[0], move[1], gameBoard);
                     //player.numOfDisks += numOfChanges + 1;
                     numOfChanges = player.numOfChanges;

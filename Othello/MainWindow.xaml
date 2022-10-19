@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Othello"
         Width="1000"
+        DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"
         >
     <Window.Foreground>
         <ImageBrush/>

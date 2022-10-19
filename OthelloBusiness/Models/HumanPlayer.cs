@@ -9,23 +9,28 @@
             Disk = disk;
         }
 
-        public async override Task<Disk[,]> RequestMove(Disk[,] gameBoard, List<Point> validMoves)
+        public async override Task<Disk[,]> RequestMoveAsync(Disk[,] gameBoard, List<Point> validMoves)
         {
-            foreach (Point point in validMoves)
+            return await Task.Run(() =>
             {
-                Console.WriteLine($"({point.Y},{point.X})");
-            }
-            Console.Write("Please make a move: ");
-            string? move = Console.ReadLine();
-            string?[] moves = move.Split(",");
-            int[] position = new int[moves.Length];
-            position[0] = int.Parse(moves[0]);
-            position[1] = int.Parse(moves[1]);
-            //return await MakeMove(position[0], position[1], gameBoard, validMoves);
-            gameBoard = await MakeMove(position[0], position[1], gameBoard, validMoves);
-            return gameBoard;
+
+                foreach (Point point in validMoves)
+                {
+                    Console.WriteLine($"({point.Y},{point.X})");
+                }
+                Console.Write("Please make a move: ");
+                string? move = Console.ReadLine();
+                string?[] moves = move.Split(",");
+                int[] position = new int[moves.Length];
+                position[0] = int.Parse(moves[0]);
+                position[1] = int.Parse(moves[1]);
+                //return await MakeMove(position[0], position[1], gameBoard, validMoves);
+                gameBoard = MakeMove(position[0], position[1], gameBoard, validMoves);
+                return gameBoard;
+            });
         }
-        public async override Task<Disk[,]> MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves)
+
+        public override Disk[,] MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves)
         {
             numOfChanges = 0;
 

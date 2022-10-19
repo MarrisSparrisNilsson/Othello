@@ -11,31 +11,36 @@ namespace OthelloBusiness.Models
             random = new Random();
         }
 
-        public async override Task<Disk[,]> RequestMove(Disk[,] gameBoard, List<Point> validMoves)
+        public async override Task<Disk[,]> RequestMoveAsync(Disk[,] gameBoard, List<Point> validMoves)
         {
-            //Thread.Sleep(2000);
-            //Thread.CurrentThread.Name = "Martin";
-            int[] position = new int[2];
-            foreach (Point move in validMoves)
+            return await Task.Run(() =>
             {
-                if ((move.Y == 0 && move.X == 0) || (move.Y == 0 && move.X == 7) || (move.Y == 7 && move.X == 0) || (move.Y == 7 && move.X == 7))
+
+                Thread.Sleep(2000);
+                //Thread.CurrentThread.Name = "Martin";
+                int[] position = new int[2];
+                foreach (Point move in validMoves)
                 {
-                    position[0] = move.Y;
-                    position[1] = move.X;
-                    break;
+                    if ((move.Y == 0 && move.X == 0) || (move.Y == 0 && move.X == 7) || (move.Y == 7 && move.X == 0) || (move.Y == 7 && move.X == 7))
+                    {
+                        position[0] = move.Y;
+                        position[1] = move.X;
+                        break;
+                    }
                 }
-            }
-            if (position[0] != 0 && position[1] != 0 || position[0] != 7 && position[1] != 0 || position[0] != 0 && position[1] != 7 || position[0] != 7 && position[1] != 7)
-            {
-                Point point = validMoves[random.Next(validMoves.Count)];
-                position[0] = point.Y;
-                position[1] = point.X;
-            }
-            Console.WriteLine($"{Name} placed a disk at position: ({position[0]}, {position[1]})");
-            gameBoard = await MakeMove(position[0], position[1], gameBoard, validMoves);
-            return gameBoard;
+                if (position[0] != 0 && position[1] != 0 || position[0] != 7 && position[1] != 0 || position[0] != 0 && position[1] != 7 || position[0] != 7 && position[1] != 7)
+                {
+                    Point point = validMoves[random.Next(validMoves.Count)];
+                    position[0] = point.Y;
+                    position[1] = point.X;
+                }
+                Console.WriteLine($"{Name} placed a disk at position: ({position[0]}, {position[1]})");
+                gameBoard = MakeMove(position[0], position[1], gameBoard, validMoves);
+                return gameBoard;
+            });
         }
-        public async override Task<Disk[,]> MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves)
+
+        public override Disk[,] MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves)
         {
             numOfChanges = 0;
 
