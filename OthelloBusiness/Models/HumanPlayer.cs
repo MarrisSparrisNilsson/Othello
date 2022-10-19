@@ -9,45 +9,42 @@
             Disk = disk;
         }
 
-        public override int RequestMove(ref Disk[,] gameBoard, List<Point> validMoves)
+        public async override Task<Disk[,]> RequestMove(Disk[,] gameBoard, List<Point> validMoves)
         {
-
-            if (validMoves.Count == 0)
+            foreach (Point point in validMoves)
             {
-                return 0;
+                Console.WriteLine($"({point.Y},{point.X})");
             }
-            else
-            {
-                foreach (Point point in validMoves)
-                {
-                    Console.WriteLine($"({point.Y},{point.X})");
-                }
-                Console.Write("Please make a move: ");
-                string? move = Console.ReadLine();
-                string?[] moves = move.Split(",");
-                int[] position = new int[moves.Length];
-                position[0] = int.Parse(moves[0]);
-                position[1] = int.Parse(moves[1]);
-                return MakeMove(position[0], position[1], ref gameBoard, validMoves);
-            }
+            Console.Write("Please make a move: ");
+            string? move = Console.ReadLine();
+            string?[] moves = move.Split(",");
+            int[] position = new int[moves.Length];
+            position[0] = int.Parse(moves[0]);
+            position[1] = int.Parse(moves[1]);
+            //return await MakeMove(position[0], position[1], gameBoard, validMoves);
+            gameBoard = await MakeMove(position[0], position[1], gameBoard, validMoves);
+            return gameBoard;
         }
-        public override int MakeMove(int y, int x, ref Disk[,] gameBoard, List<Point> validMoves)
+        public async override Task<Disk[,]> MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves)
         {
-            int numOfChanges = 0;
+            numOfChanges = 0;
 
+            gameBoard[y, x] = Disk;
+            numOfDisks++;
             foreach (Point pointItem in validMoves)
             {
                 if (pointItem.X == x && pointItem.Y == y)
                 {
-                    for (int i = 0; i < pointItem.FlipPoints.Count - 2 || i == 0; i += 2)
+                    for (int i = 0; i <= pointItem.FlipPoints.Count - 2 || i == 0; i += 2)
                     {
                         gameBoard[pointItem.FlipPoints[i], pointItem.FlipPoints[i + 1]] = Disk;
-                        gameBoard[y, x] = Disk;
+
                         numOfChanges++;
                     }
                 }
             }
-            return numOfChanges;
+            numOfDisks += numOfChanges;
+            return gameBoard;
         }
     }
 }

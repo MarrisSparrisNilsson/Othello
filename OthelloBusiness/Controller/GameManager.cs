@@ -13,7 +13,8 @@ namespace OthelloBusiness.Controller
         private List<Point>? validMoves;
         private GameBoard board;
         private int roundCount = 1;
-        private Thread computerThread;
+        //private Thread computerThread;
+        private Player player;
 
 
         public GameManager(Player player1, Player player2)
@@ -40,8 +41,9 @@ namespace OthelloBusiness.Controller
         //        thread.Start();
         //    }
         //}
-        public void Play()
+        public async void Play()
         {
+
 
             //lock (board)
             //{
@@ -51,56 +53,53 @@ namespace OthelloBusiness.Controller
 
             //try
             //{
-            Player player = player1;
+            player = player1;
+            Console.WriteLine("Round: 0");
             while (isPlaying)
             {
-                Console.WriteLine($"Round: {roundCount++}");
-                int numOfChanges = 0;
-
-                // player.GetName() ?
-                // player.GetDisk() ?
-                // Synlighet?
-                Console.WriteLine(player.Name + " - " + player.Disk);
-                validMoves = board.ValidMoves(player, ref gameBoard);
-                if (validMoves.Count == 0)
-                {
-                    skippedRounds++;
-                }
-                else
-                {
-                    //Thread.Sleep(2000);
-                    numOfChanges = player.RequestMove(ref gameBoard, validMoves);
-                    //numOfChanges = board.MakeMove(player, move[0], move[1], ref gameBoard);
-                    player.numOfDisks += numOfChanges + 1;
-                    skippedRounds = 0;
-                }
-                if (skippedRounds == 2)
-                {
-                    isPlaying = false;
-                    continue;
-                }
-                player = player2.Name == player.Name ? player1 : player2;
-                player.numOfDisks -= numOfChanges;
 
                 // Nedan används för att växla till gui tråden. alltså primärtråden.
                 //App.Current.Dispatcher.Invoke(() =>
                 //{
                 //    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
                 //});
+                if (roundCount + 1 != 62)
+                {
+                    ShowGameBoard();
+                    ShowRoundInfo();
+                }
+                int numOfChanges = 0;
+
+                // player.GetName() ?
+                // player.GetDisk() ?
+                // Synlighet?
+                validMoves = board.ValidMoves(player, ref gameBoard);
+                if (validMoves.Count == 0) skippedRounds++;
+                else
+                {
+                    gameBoard = await player.RequestMove(gameBoard, validMoves);
+                    //numOfChanges = board.MakeMove(player, move[0], move[1], gameBoard);
+                    //player.numOfDisks += numOfChanges + 1;
+                    numOfChanges = player.numOfChanges;
+                    skippedRounds = 0;
+                }
+                player = player2.Name == player.Name ? player1 : player2;
+                player.numOfDisks -= numOfChanges;
+                if (skippedRounds == 2) break;
 
             }
             //Monitor.PulseAll(board);
             //Stop(); // varför funkar ej detta?
             if (player1.numOfDisks == player2.numOfDisks)
-                Console.WriteLine("The game ended with a draw");
+            {
+                ShowGameBoard();
+                Console.WriteLine("The game ended with a draw!");
+            }
+
             else
             {
-                Console.WriteLine($"\n{player1.Name} got: {player1.numOfDisks} disks!");
-                Console.WriteLine($"{player2.Name} got: {player2.numOfDisks} disks!");
-                Console.WriteLine(
-                    $"Congratulations " +
-                    $"{(player1.numOfDisks > player2.numOfDisks ? player1.Name : player2.Name)}" +
-                    $" won the game of Othello!");
+                ShowGameBoard();
+                ShowEndGameMessage();
             }
             //}
             //catch (ThreadInterruptedException)
@@ -108,6 +107,48 @@ namespace OthelloBusiness.Controller
             //    Console.WriteLine("Computer player is done.");
             //}
             //}
+        }
+        private void ShowGameBoard()
+        {
+            for (int y = 0; y < gameBoard.GetLength(0); y++)
+            {
+                Console.WriteLine();
+                for (int x = 0; x < gameBoard.GetLength(1); x++)
+                {
+
+                    if (gameBoard[y, x] == Disk.BLANK)
+                    {
+                        Console.Write("0 ");
+                    }
+                    else if (gameBoard[y, x] == Disk.BLACK)
+                    {
+                        Console.Write("B ");
+                    }
+                    else
+                    {
+                        Console.Write("W ");
+                    }
+                }
+            }
+            Console.WriteLine("\n");
+        }
+
+        private void ShowEndGameMessage()
+        {
+            Console.WriteLine($"\n{player1.Name} got: {player1.numOfDisks} disks!");
+            Console.WriteLine($"{player2.Name} got: {player2.numOfDisks} disks!");
+            Console.WriteLine(
+                $"Congratulations " +
+                $"{(player1.numOfDisks > player2.numOfDisks ? player1.Name : player2.Name)}" +
+                $" won the game of Othello!");
+        }
+
+        private void ShowRoundInfo()
+        {
+            Console.WriteLine($"{player1.Disk}: {player1.numOfDisks}");
+            Console.WriteLine($"{player2.Disk}: {player2.numOfDisks}");
+            Console.WriteLine($"\nRound: {roundCount++}");
+            Console.WriteLine(player.Name + " - " + player.Disk);
         }
         //public void Stop()
         //{

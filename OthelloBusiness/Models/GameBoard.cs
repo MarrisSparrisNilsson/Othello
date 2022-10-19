@@ -4,7 +4,7 @@
     {
         private Disk LastDisk = Disk.BLANK;
         private List<Point> validMoves;
-        private Point? point;
+        private Point? point = null;
 
         public GameBoard()
         {
@@ -67,12 +67,16 @@
                     point.X = x;
                     point.Y = y;
                     validMoves.Add(point);
+                    point = null;
                 }
                 return;
             }
             else if (gameBoard[y, x] != player.Disk)
             {
-                point = new Point();
+                if (point == null)
+                {
+                    point = new Point();
+                }
                 LastDisk = gameBoard[y, x];
                 point.FlipPoints.Add(y);
                 point.FlipPoints.Add(x);
@@ -95,6 +99,7 @@
                 else if (Directions.NORTH_WEST == directionType && y > 0 && x > 0) // NORTH WEST
                     ValidMove(y, x, player, Directions.NORTH_WEST, ref gameBoard);
                 LastDisk = Disk.BLANK;
+                point = null;
             }
         }
     }
