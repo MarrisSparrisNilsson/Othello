@@ -43,8 +43,8 @@
                     for (int i = 0; i <= pointItem.FlipPoints.Count - 2 || i == 0; i += 2)
                     {
                         gameBoard[pointItem.FlipPoints[i], pointItem.FlipPoints[i + 1]] = Disk;
-
                         numOfChanges++;
+
                     }
                 }
             }

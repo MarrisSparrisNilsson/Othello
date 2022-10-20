@@ -1,9 +1,54 @@
-﻿using System.ComponentModel;
+﻿using OthelloPresentation.Commands;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace OthelloPresentation.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class GameWindowViewModel : INotifyPropertyChanged
     {
+
+        //public ObservableCollection<ObservableCollection<Brush>> Board { get; private set; } = new();
+        private ICommand? _placeDiskCommand;
+        public ICommand PlaceDiskCmd =>
+        _placeDiskCommand ??= new PlaceDiskCommand();
+
+        private ICommand? _gameExitCommand;
+        public ICommand GameExitCmd =>
+        _gameExitCommand ??= new GameExitCommand();
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public GameWindowViewModel()
+        {
+            //for (int row = 0; row < 8; ++row)
+            //{
+            //    Board.Add(new ObservableCollection<Brush>());
+            //    for (int col = 0; col < 8; ++col)
+            //    {
+            //        Board[row].Add(Brushes.Green);
+            //    }
+            //}
+        }
+
+        //// På något sätt behöver vi också när validMoves returnerar uppdatera guit och färglägga alla punkter i guit i grått.
+        //private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    Point p = e.GetPosition(gGameBoard);
+        //    // Vi måste typ ha en if sats eller liknande som först kollar att den point som tryckts på matchar en punkt i valid moves.
+        //    if (p.X > 60 && p.Y > 60)
+        //    {
+
+        //        double y = Math.Floor(Math.Ceiling((double)p.Y) / 60);
+        //        double x = Math.Floor(Math.Ceiling((double)p.X) / 60);
+
+        //        if (x >= 1) x -= 1;
+        //        if (y >= 1) y -= 1;
+
+        //        Board[(int)y][(int)x] = Brushes.White;
+        //    }
+        //}
+
+
         //    private int carId = 0;
         //    public IList<Car> Cars { get; } = new ObservableCollection<Car>();
 
@@ -65,7 +110,6 @@ namespace OthelloPresentation.ViewModels
         //    }
 
         //    public string? Info => $"{SelectedCar?.CarId} {SelectedCarPetName}";
-        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }
 

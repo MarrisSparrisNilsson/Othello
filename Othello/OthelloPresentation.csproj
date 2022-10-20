@@ -11,4 +11,10 @@
     <ProjectReference Include="..\OthelloBusiness\OthelloBusiness.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Views\SetupGameDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>
