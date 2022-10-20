@@ -1,19 +1,21 @@
-﻿<Window x:Class="OthelloPresentation.Views.DrawDialog"
+﻿<Window x:Class="OthelloPresentation.Views.DrawnDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OthelloPresentation.Views"
         mc:Ignorable="d"
-        Title="DrawDialog" Height="450" Width="800">
+        Title="DrawDialog" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
+        MinWidth="400" MaxHeight="300" MaxWidth="600"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
             <Label Content="The Game Ended With A Draw!" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 20"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                <Button Content="Play again" Margin="10 5" Command=""/>
-                <Button Content="Cancel" Margin="10 5"/>
+                <Button  x:Name="btnOK" IsCancel="True" Margin="10 5" MinWidth="60">_OK</Button>
+
             </StackPanel>
         </StackPanel>
     </Grid>
