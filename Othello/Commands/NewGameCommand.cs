@@ -1,4 +1,6 @@
-﻿namespace OthelloPresentation.Commands
+﻿using OthelloPresentation.Views;
+
+namespace OthelloPresentation.Commands
 {
     public class NewGameCommand : CommandBase
     {
@@ -10,6 +12,8 @@
         public override void Execute(object? parameter)
         {
             //Start setupGameDialog
+            SetupGameDialog setupGameDialog = new SetupGameDialog();
+            setupGameDialog.ShowDialog();
         }
     }
 }

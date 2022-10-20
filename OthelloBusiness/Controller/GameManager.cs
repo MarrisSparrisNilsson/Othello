@@ -5,15 +5,15 @@ namespace OthelloBusiness.Controller
     public class GameManager
     {
         private int skippedRounds;
-        private Player player1;
-        private Player player2;
+        private Player? player1;
+        private Player? player2;
         private bool isPlaying = true;
-        public Disk[,] gameBoard = new Disk[8, 8];
-        private List<Point>? validMoves;
-        private GameBoard board;
+        public Disk[,]? gameBoard = new Disk[8, 8];
+        public List<Point>? validMoves;
+        private GameBoard? board;
         private int roundCount = 1;
         //private Thread computerThread;
-        private Player player;
+        private Player? player;
 
 
         public GameManager(Player player1, Player player2)

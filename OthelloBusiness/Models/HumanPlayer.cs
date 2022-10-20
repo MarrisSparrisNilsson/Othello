@@ -40,7 +40,7 @@
                         }
                     }
                 }
-                else Console.WriteLine("Invalid move, please try again!");
+                if (!isValidInput) Console.WriteLine("Invalid move, please try again!");
                 //position[0] = int.Parse(moves[0]);
                 //position[1] = int.Parse(moves[1]);
 

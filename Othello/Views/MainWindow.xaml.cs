@@ -1,9 +1,6 @@
-﻿using OthelloBusiness.Controller;
-using OthelloBusiness.Models;
-using OthelloPresentation.Commands;
+﻿using OthelloPresentation.Commands;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -16,9 +13,10 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Player? player1;
-        private Player? player2;
-        private GameManager gameManager;
+        //private Player? player1;
+        //private Player? player2;
+        //private GameManager? gameManager;
+
 
         private ICommand? _placeDiskCommand;
         public ICommand PlaceDiskCmd =>
@@ -42,7 +40,15 @@ namespace OthelloPresentation.Views
         {
             //DataContext = ViewModel;
             InitializeComponent();
-            gameManager = new GameManager(player1, player2);
+
+            // Här ska vi databinda det som skrivs in från setup game dialog till player 1 och player 2;
+            // PlayerTypes
+
+            //cbPlayerType2.SelectedIndex = 0;
+
+            // PlayerStrings
+
+            //gameManager = new GameManager(player1, player2);
             Board = new ObservableCollection<ObservableCollection<Brush>>();
             for (int row = 0; row < 8; ++row)
             {
@@ -52,25 +58,30 @@ namespace OthelloPresentation.Views
                     Board[row].Add(Brushes.Green);
                 }
             }
-            Play();
+            //Play();
 
             //App.Current.Dispatcher.Invoke(() =>
             //{
             //    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
             //});
         }
-        void Play()
-        {
-            while (true)
-            {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
-                    Thread.Sleep(50);
-                    UpdateGameBoard();
-                });
-            }
-        }
+        //void Play()
+        //{
+        //    while (true)
+        //    {
+        //        App.Current.Dispatcher.Invoke(() =>
+        //        {
+        //            // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
+        //            Thread.Sleep(50);
+        //            UpdateGameBoard();
+
+        //        });
+        // Tanken var att skapa gråa rutor för varje valid move
+        //foreach (Point point in gameManager.validMoves)
+        //{
+        //    Board[(int)point.Y][(int)point.X] = Brushes.LightGray;
+        //}
+
         // På något sätt behöver vi också när validMoves returnerar uppdatera guit och färglägga alla punkter i guit i grått.
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -89,23 +100,24 @@ namespace OthelloPresentation.Views
             }
         }
 
-        private void UpdateGameBoard()
-        {
-            for (int y = 0; y < gameManager.gameBoard.GetLength(0); y++)
-            {
-                for (int x = 0; x < gameManager.gameBoard.GetLength(1); x++)
-                {
-                    if (Disk.WHITE == gameManager.gameBoard[y, x])
-                    {
-                        Board[y][x] = Brushes.White;
+        //private void UpdateGameBoard()
+        //{
+        //    for (int y = 0; y < gameManager.gameBoard.GetLength(0); y++)
+        //    {
+        //        for (int x = 0; x < gameManager.gameBoard.GetLength(1); x++)
+        //        {
+        //            if (Disk.WHITE == gameManager.gameBoard[y, x])
+        //            {
+        //                Board[y][x] = Brushes.White;
 
-                    }
-                    else if (Disk.BLACK == gameManager.gameBoard[y, x])
-                    {
-                        Board[y][x] = Brushes.Black;
-                    }
-                }
-            }
-        }
+        //            }
+        //            else if (Disk.BLACK == gameManager.gameBoard[y, x])
+        //            {
+        //                Board[y][x] = Brushes.Black;
+        //            }
+        //        }
+        //    }
+        //}
+
     }
 }

@@ -1,6 +1,4 @@
-﻿using OthelloPresentation.Commands;
-using System.ComponentModel;
-using System.Windows.Input;
+﻿using System.ComponentModel;
 
 namespace OthelloPresentation.ViewModels
 {
@@ -8,13 +6,13 @@ namespace OthelloPresentation.ViewModels
     {
 
         //public ObservableCollection<ObservableCollection<Brush>> Board { get; private set; } = new();
-        private ICommand? _placeDiskCommand;
-        public ICommand PlaceDiskCmd =>
-        _placeDiskCommand ??= new PlaceDiskCommand();
+        //private ICommand? _placeDiskCommand;
+        //public ICommand PlaceDiskCmd =>
+        //_placeDiskCommand ??= new PlaceDiskCommand();
 
-        private ICommand? _gameExitCommand;
-        public ICommand GameExitCmd =>
-        _gameExitCommand ??= new GameExitCommand();
+        //private ICommand? _gameExitCommand;
+        //public ICommand GameExitCmd =>
+        //_gameExitCommand ??= new GameExitCommand();
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

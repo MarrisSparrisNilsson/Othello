@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="Othello"
         Width="1000"
+        WindowStartupLocation="CenterScreen"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
         >
         <!--DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"-->
@@ -23,7 +24,8 @@
             <ToolBar.Foreground>
                 <ImageBrush TileMode="Tile"/>
             </ToolBar.Foreground>
-            <Button Content="New Game" />
+            <Button x:Name="btnNewGame" Content="New Game" Command="{Binding Path=NewGameCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                CommandParameter="{Binding ElementName=btnNewGame}"/>
             <Separator/>
             <Button x:Name="btnExit" Content="Exit" 
                 Command="{Binding Path=GameExitCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
