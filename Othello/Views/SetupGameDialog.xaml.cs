@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace OthelloPresentation.Views
 {
@@ -8,27 +7,15 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class SetupGameDialog : Window
     {
-        public SetupGameDialog(string question, string defaultAnswer = "")
+        public SetupGameDialog()
         {
             InitializeComponent();
-            lblQuestion.Content = question;
-            txtAnswer.Text = defaultAnswer;
+
         }
 
-        private void btnDialogOk_Click(object sender, RoutedEventArgs e)
+        private void btnDialogStart_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
-        }
 
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-            txtAnswer.SelectAll();
-            txtAnswer.Focus();
-        }
-
-        public string Answer
-        {
-            get { return txtAnswer.Text; }
         }
     }
 }

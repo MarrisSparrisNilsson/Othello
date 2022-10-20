@@ -4,12 +4,11 @@ namespace OthelloBusiness.Controller
 {
     public class GameManager
     {
-        public int skippedRounds { get; set; }
-
+        private int skippedRounds;
         private Player player1;
         private Player player2;
         private bool isPlaying = true;
-        private Disk[,] gameBoard = new Disk[8, 8];
+        public Disk[,] gameBoard = new Disk[8, 8];
         private List<Point>? validMoves;
         private GameBoard board;
         private int roundCount = 1;

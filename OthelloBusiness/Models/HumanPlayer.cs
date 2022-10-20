@@ -11,43 +11,62 @@
 
         public async override Task<Disk[,]> RequestMoveAsync(Disk[,] gameBoard, List<Point> validMoves)
         {
-            return await Task.Run(() =>
-            {
+            //return await Task.Run(() =>
+            //{
 
-                foreach (Point point in validMoves)
-                {
-                    Console.WriteLine($"({point.Y},{point.X})");
-                }
+            foreach (Point p in validMoves)
+            {
+                Console.WriteLine($"({p.Y},{p.X})");
+            }
+            Point? point = null;
+            bool isValidInput = false;
+
+            while (!isValidInput)
+            {
+                Console.WriteLine();
                 Console.Write("Please make a move: ");
                 string? move = Console.ReadLine();
                 string?[] moves = move.Split(",");
                 int[] position = new int[moves.Length];
-                position[0] = int.Parse(moves[0]);
-                position[1] = int.Parse(moves[1]);
-                //return await MakeMove(position[0], position[1], gameBoard, validMoves);
+                if (moves.Length > 1 && moves.Length < 3 && int.TryParse(moves[0], out position[0]) && int.TryParse(moves[1], out position[1])
+                    && position[0] < 8 && position[0] >= 0 && position[1] >= 0 && position[1] < 8)
+                {
+                    foreach (Point p in validMoves)
+                    {
+                        if (p.Y == position[0] && p.X == position[1])
+                        {
+                            isValidInput = true;
+                            point = p;
+                        }
+                    }
+                }
+                else Console.WriteLine("Invalid move, please try again!");
+                //position[0] = int.Parse(moves[0]);
+                //position[1] = int.Parse(moves[1]);
 
-                return MakeMove(position[0], position[1], gameBoard, validMoves);
-            });
+            }
+            return MakeMove(point, gameBoard);
+            //});
         }
 
-        public override Disk[,] MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves)
+        public override Disk[,] MakeMove(Point point, Disk[,] gameBoard)
         {
             numOfChanges = 0;
 
-            gameBoard[y, x] = Disk;
+            gameBoard[point.Y, point.X] = Disk;
             numOfDisks++;
-            foreach (Point pointItem in validMoves)
+            //foreach (Point pointItem in validMoves)
+            //{
+            //    if (pointItem.X == x && pointItem.Y == y)
+            //    {
+            for (int i = 0; i <= point.FlipPoints.Count - 2 || i == 0; i += 2)
             {
-                if (pointItem.X == x && pointItem.Y == y)
-                {
-                    for (int i = 0; i <= pointItem.FlipPoints.Count - 2 || i == 0; i += 2)
-                    {
-                        gameBoard[pointItem.FlipPoints[i], pointItem.FlipPoints[i + 1]] = Disk;
-                        numOfChanges++;
+                gameBoard[point.FlipPoints[i], point.FlipPoints[i + 1]] = Disk;
+                numOfChanges++;
 
-                    }
-                }
             }
+            //    }
+            //}
             numOfDisks += numOfChanges;
             return gameBoard;
         }

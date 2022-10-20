@@ -19,6 +19,6 @@
         //{
         //Inhämta Player Name från SetupGameDialog och WinnerDialog
         //}
-        public abstract Disk[,] MakeMove(int y, int x, Disk[,] gameBoard, List<Point> validMoves);
+        public abstract Disk[,] MakeMove(Point point, Disk[,] gameBoard);
     }
 }
