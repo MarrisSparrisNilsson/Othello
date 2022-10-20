@@ -2,7 +2,6 @@
 {
     public class HumanPlayer : Player
     {
-
         public HumanPlayer(string name, Disk disk)
         {
             Name = name;
@@ -11,42 +10,46 @@
 
         public async override Task<Disk[,]> RequestMoveAsync(Disk[,] gameBoard, List<Point> validMoves)
         {
-            //return await Task.Run(() =>
-            //{
-
-            foreach (Point p in validMoves)
+            return await Task.Run(() =>
             {
-                Console.WriteLine($"({p.Y},{p.X})");
-            }
-            Point? point = null;
-            bool isValidInput = false;
-
-            while (!isValidInput)
-            {
-                Console.WriteLine();
-                Console.Write("Please make a move: ");
-                string? move = Console.ReadLine();
-                string?[] moves = move.Split(",");
-                int[] position = new int[moves.Length];
-                if (moves.Length > 1 && moves.Length < 3 && int.TryParse(moves[0], out position[0]) && int.TryParse(moves[1], out position[1])
-                    && position[0] < 8 && position[0] >= 0 && position[1] >= 0 && position[1] < 8)
+                Point? point = null;
+                lock (threadLock)
                 {
+                    Monitor.Wait(threadLock);
                     foreach (Point p in validMoves)
                     {
-                        if (p.Y == position[0] && p.X == position[1])
-                        {
-                            isValidInput = true;
-                            point = p;
-                        }
+                        Console.WriteLine($"({p.Y},{p.X})");
                     }
-                }
-                if (!isValidInput) Console.WriteLine("Invalid move, please try again!");
-                //position[0] = int.Parse(moves[0]);
-                //position[1] = int.Parse(moves[1]);
+                    bool isValidInput = false;
 
-            }
-            return MakeMove(point, gameBoard);
-            //});
+                    while (!isValidInput)
+                    {
+                        Console.WriteLine();
+                        Console.Write("Please make a move: ");
+                        string? move = Console.ReadLine();
+                        string?[] moves = move.Split(",");
+                        int[] position = new int[moves.Length];
+                        if (moves.Length > 1 && moves.Length < 3 && int.TryParse(moves[0], out position[0]) && int.TryParse(moves[1], out position[1])
+                            && position[0] < 8 && position[0] >= 0 && position[1] >= 0 && position[1] < 8)
+                        {
+                            foreach (Point p in validMoves)
+                            {
+                                if (p.Y == position[0] && p.X == position[1])
+                                {
+                                    isValidInput = true;
+                                    point = p;
+                                }
+                            }
+                        }
+                        if (!isValidInput) Console.WriteLine("Invalid move, please try again!");
+                        //position[0] = int.Parse(moves[0]);
+                        //position[1] = int.Parse(moves[1]);
+                    }
+
+                    Monitor.PulseAll(threadLock);
+                }
+                return MakeMove(point, gameBoard);
+            });
         }
 
         public override Disk[,] MakeMove(Point point, Disk[,] gameBoard)

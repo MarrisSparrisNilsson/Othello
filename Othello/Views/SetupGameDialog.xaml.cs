@@ -10,10 +10,15 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class SetupGameDialog : Window
     {
+        public GameManager? gameManager { get; private set; }
+
         public enum PlayerType { HumanPlayer, ComputerPlayer }
+
         public ObservableCollection<PlayerType>? PlayerTypes { get; private set; } = new();
-        private Player? player1 = null;
-        private Player? player2 = null;
+        //private Player? player1 = new HumanPlayer("", Disk.BLACK);
+        private Player? player1;
+        private Player? player2;
+        //private Player? player2 = new ComputerPlayer("", Disk.BLACK);
         public SetupGameDialog()
         {
             InitializeComponent();
@@ -27,16 +32,17 @@ namespace OthelloPresentation.Views
         {
             if (cbPlayerType1.SelectedIndex == 0)
             {
-                player1 = new HumanPlayer(player1.Name = tbName1.Text, player1.Disk = Disk.BLACK);
+                player1 = new HumanPlayer(tbName1.Text, Disk.BLACK);
             }
-            else player1 = new ComputerPlayer(player1.Name = tbName1.Text, player1.Disk = Disk.BLACK);
+            else player1 = new ComputerPlayer(tbName1.Text, Disk.BLACK);
             if (cbPlayerType2.SelectedIndex == 0)
             {
-                player2 = new HumanPlayer(player2.Name = tbName2.Text, player2.Disk = Disk.WHITE);
+                player2 = new HumanPlayer(tbName2.Text, Disk.WHITE);
             }
-            else player2 = new ComputerPlayer(player2.Name = tbName2.Text, player2.Disk = Disk.WHITE);
+            else player2 = new ComputerPlayer(tbName2.Text, Disk.WHITE);
 
-            GameManager gameManager = new GameManager(player1, player2);
+            gameManager = new GameManager(player1, player2);
+            //gameManager.Play();
         }
     }
 }

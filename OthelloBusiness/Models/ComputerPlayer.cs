@@ -15,22 +15,27 @@
             return await Task.Run(() =>
             {
                 Point? point = null;
-                Thread.Sleep(2000);
-                //Thread.CurrentThread.Name = "Martin";
-                int[] position = new int[2];
-                foreach (Point move in validMoves)
+                lock (threadLock)
                 {
-                    if ((move.Y == 0 && move.X == 0) || (move.Y == 0 && move.X == 7) || (move.Y == 7 && move.X == 0) || (move.Y == 7 && move.X == 7))
+                    Monitor.Wait(threadLock);
+                    Thread.Sleep(2000);
+                    //Thread.CurrentThread.Name = "Martin";
+                    int[] position = new int[2];
+                    foreach (Point move in validMoves)
                     {
-                        point = move;
-                        break;
+                        if ((move.Y == 0 && move.X == 0) || (move.Y == 0 && move.X == 7) || (move.Y == 7 && move.X == 0) || (move.Y == 7 && move.X == 7))
+                        {
+                            point = move;
+                            break;
+                        }
                     }
+                    if (point == null) point = validMoves[random.Next(validMoves.Count)];
+                    //if (position[0] != 0 && position[1] != 0 || position[0] != 7 && position[1] != 0 || position[0] != 0 && position[1] != 7 || position[0] != 7 && position[1] != 7)
+                    //{
+                    //}
+                    Console.WriteLine($"{Name} placed a disk at position: ({position[0]}, {position[1]})");
+                    Monitor.PulseAll(threadLock);
                 }
-                if (point == null) point = validMoves[random.Next(validMoves.Count)];
-                //if (position[0] != 0 && position[1] != 0 || position[0] != 7 && position[1] != 0 || position[0] != 0 && position[1] != 7 || position[0] != 7 && position[1] != 7)
-                //{
-                //}
-                Console.WriteLine($"{Name} placed a disk at position: ({position[0]}, {position[1]})");
                 return MakeMove(point, gameBoard);
             });
         }

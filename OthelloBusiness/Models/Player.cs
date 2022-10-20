@@ -6,6 +6,8 @@
          * Se över synlighet!
          */
         //protected Player player;
+        protected object? threadLock = new object();
+
         public int numOfDisks = 2;
         public int numOfChanges = 0;
         public int disksPlaced = 30;
