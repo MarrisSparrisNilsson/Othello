@@ -2,6 +2,8 @@
 {
     public class HumanPlayer : Player
     {
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public HumanPlayer(string name, Disk disk)
         {
@@ -9,68 +11,22 @@
             Disk = disk;
         }
 
-        public async override Task<Disk[,]> RequestMoveAsync(Disk[,] gameBoard, List<Point> validMoves)
+        public async override Task<Position> RequestMoveAsync(Disk[,] gameBoard, List<Position> validMoves)
         {
             return await Task.Run(() =>
             {
-                Point? point = null;
+                Position point = new();
                 lock (threadLock)
                 {
                     //Monitor.Wait(threadLock);
-                    foreach (Point p in validMoves)
-                    {
-                        Console.WriteLine($"({p.Y},{p.X})");
-                    }
-                    bool isValidInput = false;
 
-                    while (!isValidInput)
-                    {
-                        Console.WriteLine();
-                        Console.Write("Please make a move: ");
-                        string? move = Console.ReadLine();
-                        string?[] moves = move.Split(",");
-                        int[] position = new int[moves.Length];
-                        if (moves.Length > 1 && moves.Length < 3 && int.TryParse(moves[0], out position[0]) && int.TryParse(moves[1], out position[1])
-                            && position[0] < 8 && position[0] >= 0 && position[1] >= 0 && position[1] < 8)
-                        {
-                            foreach (Point p in validMoves)
-                            {
-                                if (p.Y == position[0] && p.X == position[1])
-                                {
-                                    isValidInput = true;
-                                    point = p;
-                                }
-                            }
-                        }
-                        if (!isValidInput) Console.WriteLine("Invalid move, please try again!");
-                    }
+                    point.X = X;
+                    point.Y = Y;
 
                     Monitor.PulseAll(threadLock);
                 }
-                return MakeMove(point, gameBoard);
+                return point;
             });
-        }
-
-        public override Disk[,] MakeMove(Point point, Disk[,] gameBoard)
-        {
-            numOfChanges = 0;
-
-            gameBoard[point.Y, point.X] = Disk;
-            numOfDisks++;
-            //foreach (Point pointItem in validMoves)
-            //{
-            //    if (pointItem.X == x && pointItem.Y == y)
-            //    {
-            for (int i = 0; i <= point.FlipPoints.Count - 2 || i == 0; i += 2)
-            {
-                gameBoard[point.FlipPoints[i], point.FlipPoints[i + 1]] = Disk;
-                numOfChanges++;
-
-            }
-            //    }
-            //}
-            numOfDisks += numOfChanges;
-            return gameBoard;
         }
     }
 }

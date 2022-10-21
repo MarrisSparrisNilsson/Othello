@@ -9,10 +9,10 @@
             Disk = disk;
         }
 
-        public override Point RequestMove(Disk[,] gameBoard, List<Point> validMoves)
+        public override Position RequestMove(Disk[,] gameBoard, List<Position> validMoves)
         {
-            Point? point = null;
-            foreach (Point p in validMoves)
+            Position? point = null;
+            foreach (Position p in validMoves)
             {
                 Console.WriteLine($"({p.Y},{p.X})");
             }
@@ -28,7 +28,7 @@
                 if (moves.Length > 1 && moves.Length < 3 && int.TryParse(moves[0], out position[0]) && int.TryParse(moves[1], out position[1])
                     && position[0] < 8 && position[0] >= 0 && position[1] >= 0 && position[1] < 8)
                 {
-                    foreach (Point p in validMoves)
+                    foreach (Position p in validMoves)
                     {
                         if (p.Y == position[0] && p.X == position[1])
                         {

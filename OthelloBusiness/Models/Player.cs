@@ -17,10 +17,9 @@
         public Disk Disk { get; set; }
 
 
-        public abstract Task<Disk[,]> RequestMoveAsync(Disk[,] gameBoard, List<Point> validMoves);
+        public abstract Task<Position> RequestMoveAsync(Disk[,] gameBoard, List<Position> validMoves);
         //{
         //Inhämta Player Name från SetupGameDialog och WinnerDialog
         //}
-        public abstract Disk[,] MakeMove(Point point, Disk[,] gameBoard);
     }
 }
