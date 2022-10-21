@@ -18,7 +18,7 @@
                 lock (threadLock)
                 {
                     Thread.Sleep(2000);
-                    //Thread.CurrentThread.Name = "Martin";
+                    Monitor.Wait(threadLock);
                     foreach (Position move in validMoves)
                     {
                         if ((move.Y == 0 && move.X == 0) || (move.Y == 0 && move.X == 7) || (move.Y == 7 && move.X == 0) || (move.Y == 7 && move.X == 7))
@@ -30,7 +30,6 @@
                     if (position == null) position = validMoves[random.Next(validMoves.Count)];
 
                     Monitor.PulseAll(threadLock);
-                    //Monitor.Wait(threadLock);
                 }
                 return position;
             });

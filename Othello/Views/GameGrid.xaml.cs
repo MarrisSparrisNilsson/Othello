@@ -1,6 +1,7 @@
 ﻿using OthelloBusiness.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class GameGrid : UserControl
     {
+
         public static int positionX { get; set; }
         public static int positionY { get; set; }
         public static ObservableCollection<ObservableCollection<Brush>> Board { get; set; }
@@ -59,14 +61,20 @@ namespace OthelloPresentation.Views
                         //Player as HumanPlayer player;
                         (MainWindow._GameManager.player as HumanPlayer).X = (int)x;
                         (MainWindow._GameManager.player as HumanPlayer).Y = (int)y;
-
+                        Thread.Sleep(1000);
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            UpdateGameBoard();
+                            foreach (Position pos in MainWindow._GameManager.validMoves)
+                            {
+                                Board[(int)pos.Y][(int)pos.X] = Brushes.Gray;
+                            }
+                        });
                         //{
                         //Board[(int)y][(int)x] = Brushes.White;
-                        UpdateGameBoard();
+
                     }
                 }
-
-
             }
         }
         private void UpdateGameBoard()

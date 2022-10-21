@@ -38,38 +38,38 @@ namespace OthelloPresentation.Views
         public MainWindow()
         {
             InitializeComponent();
-            //while (true)
-            //{
-            //    App.Current.Dispatcher.Invoke(() =>
-            //    {
-            //        // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
-            //        Thread.Sleep(50);
-            //        UpdateGameBoard();
-            //        Thread.Sleep(50);
-            //        foreach (Position pos in _GameManager.validMoves)
-            //        {
-            //            GameGrid.Board[(int)pos.Y][(int)pos.X] = Brushes.LightGray;
-            //        }
-            //    });
-
-            //    //Tanken var att skapa gråa rutor för varje valid move
-
-            //    if (_GameManager.skippedRounds == 2)
-            //    {
-            //        if (_GameManager.player1.numOfDisks == _GameManager.player2.numOfDisks)
-            //        {
-            //            DrawnDialog drawnDialog = new DrawnDialog();
-            //            drawnDialog.ShowDialog();
-            //        }
-            //        else
-            //        {
-            //            WinnerDialog winnerDialog = new WinnerDialog();
-            //            winnerDialog.WinnerMessage = ((_GameManager.player1.numOfDisks > _GameManager.player2.numOfDisks) ? _GameManager.player1.Name : _GameManager.player2.Name) + "wins!";
-            //            winnerDialog.ShowDialog();
-            //        }
-            //    }
-            //}
         }
+        //while (true)
+        //{
+        //    App.Current.Dispatcher.Invoke(() =>
+        //    {
+        //        // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
+        //        Thread.Sleep(50);
+        //        UpdateGameBoard();
+        //        Thread.Sleep(50);
+        //        foreach (Position pos in _GameManager.validMoves)
+        //        {
+        //            GameGrid.Board[(int)pos.Y][(int)pos.X] = Brushes.LightGray;
+        //        }
+        //    });
+
+        //    //Tanken var att skapa gråa rutor för varje valid move
+
+        //    if (_GameManager.skippedRounds == 2)
+        //    {
+        //        if (_GameManager.player1.numOfDisks == _GameManager.player2.numOfDisks)
+        //        {
+        //            DrawnDialog drawnDialog = new DrawnDialog();
+        //            drawnDialog.ShowDialog();
+        //        }
+        //        else
+        //        {
+        //            WinnerDialog winnerDialog = new WinnerDialog();
+        //            winnerDialog.WinnerMessage = ((_GameManager.player1.numOfDisks > _GameManager.player2.numOfDisks) ? _GameManager.player1.Name : _GameManager.player2.Name) + "wins!";
+        //            winnerDialog.ShowDialog();
+        //        }
+        //    }
+        //}
 
 
     }

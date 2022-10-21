@@ -11,7 +11,6 @@ namespace OthelloBusiness.Controller
         public Player? player2;
 
         private bool isPlaying = true;
-
         public Disk[,]? gameBoard = new Disk[8, 8];
         public List<Position>? validMoves;
 

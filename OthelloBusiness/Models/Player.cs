@@ -2,10 +2,8 @@
 {
     public abstract class Player
     {
-        /*
-         * Se över synlighet!
-         */
-        //protected Player player;
+        public static AutoResetEvent waitHandle = new AutoResetEvent(false);
+
         protected object? threadLock = new object();
 
         public int numOfDisks = 2;
@@ -18,8 +16,5 @@
 
 
         public abstract Task<Position> RequestMoveAsync(Disk[,] gameBoard, List<Position> validMoves);
-        //{
-        //Inhämta Player Name från SetupGameDialog och WinnerDialog
-        //}
     }
 }
