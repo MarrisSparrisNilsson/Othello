@@ -16,7 +16,7 @@
         public Disk Disk { get; set; }
 
 
-        public abstract Point RequestMove(Disk[,] gameBoard, List<Point> validMoves);
+        public abstract Position RequestMove(Disk[,] gameBoard, List<Position> validMoves);
         //{
         //Inhämta Player Name från SetupGameDialog och WinnerDialog
         //}

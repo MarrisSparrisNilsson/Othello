@@ -3,15 +3,15 @@
     public class GameBoard
     {
         private Disk LastDisk = Disk.BLANK;
-        private List<Point> validMoves;
-        private Point? point = null;
+        private List<Position> validMoves;
+        private Position? point = null;
 
         public GameBoard()
         {
-            validMoves = new List<Point>();
+            validMoves = new List<Position>();
         }
 
-        public List<Point> ValidMoves(Player player, Disk[,] gameBoard)
+        public List<Position> ValidMoves(Player player, Disk[,] gameBoard)
         {
             validMoves.Clear();
             for (int y = 0; y < gameBoard.GetLength(0); y++)
@@ -75,11 +75,11 @@
             {
                 if (point == null)
                 {
-                    point = new Point();
+                    point = new Position();
                 }
                 LastDisk = gameBoard[y, x];
-                point.FlipPoints.Add(y);
-                point.FlipPoints.Add(x);
+                point.FlipPositions.Add(y);
+                point.FlipPositions.Add(x);
                 //point.flipPoints[0] = y;
                 //point.flipPoints[1] = x;
                 if (Directions.NORTH == directionType && y > 0) // NORTH
@@ -103,16 +103,16 @@
             }
         }
 
-        public Disk[,] MakeMove(Point point, Disk[,] gameBoard, Player player)
+        public Disk[,] MakeMove(Position point, Disk[,] gameBoard, Player player)
         {
             player.numOfChanges = 0;
 
             gameBoard[point.Y, point.X] = player.Disk;
             player.numOfDisks++;
 
-            for (int i = 0; i <= point.FlipPoints.Count - 2 || i == 0; i += 2)
+            for (int i = 0; i <= point.FlipPositions.Count - 2 || i == 0; i += 2)
             {
-                gameBoard[point.FlipPoints[i], point.FlipPoints[i + 1]] = player.Disk;
+                gameBoard[point.FlipPositions[i], point.FlipPositions[i + 1]] = player.Disk;
                 player.numOfChanges++;
 
             }

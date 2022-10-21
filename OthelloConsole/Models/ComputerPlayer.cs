@@ -10,13 +10,13 @@
             random = new Random();
         }
 
-        public override Point RequestMove(Disk[,] gameBoard, List<Point> validMoves)
+        public override Position RequestMove(Disk[,] gameBoard, List<Position> validMoves)
         {
-            Point? point = null;
+            Position? point = null;
 
             Thread.Sleep(2000);
 
-            foreach (Point move in validMoves)
+            foreach (Position move in validMoves)
             {
                 if (move.Y == 0 && move.X == 0 || move.Y == 0 && move.X == 7 || move.Y == 7 && move.X == 0 || move.Y == 7 && move.X == 7)
                 {

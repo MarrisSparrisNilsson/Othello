@@ -1,16 +1,16 @@
 ﻿namespace OthelloConsole.Models
 {
-    public class Point
+    public class Position
     {
-        public List<int> FlipPoints { get; set; }
+        public List<int> FlipPositions { get; set; }
 
         public int X { get; set; }
 
         public int Y { get; set; }
 
-        public Point()
+        public Position()
         {
-            FlipPoints = new List<int>();
+            FlipPositions = new List<int>();
         }
 
         //public override string ToString() => $"{X.ToString()}{Y.ToString()}";

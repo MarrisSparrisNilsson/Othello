@@ -3,15 +3,15 @@
     public class GameBoard
     {
         private Disk LastDisk = Disk.BLANK;
-        private List<Point> validMoves;
-        private Point? point = null;
+        private List<Position> validMoves;
+        private Position? position = null;
 
         public GameBoard()
         {
-            validMoves = new List<Point>();
+            validMoves = new List<Position>();
         }
 
-        public List<Point> ValidMoves(Player player, ref Disk[,] gameBoard)
+        public List<Position> ValidMoves(Player player, Disk[,] gameBoard)
         {
             validMoves.Clear();
             for (int y = 0; y < gameBoard.GetLength(0); y++)
@@ -21,27 +21,27 @@
                     if (player.Disk == gameBoard[y, x])
                     {
                         if (y > 0) // NORTH
-                            ValidMove(y, x, player, Directions.NORTH, ref gameBoard);
+                            ValidMove(y, x, player, Directions.NORTH, gameBoard);
                         if (y > 0 && x < 7) // NORTH EAST
-                            ValidMove(y, x, player, Directions.NORTH_EAST, ref gameBoard);
+                            ValidMove(y, x, player, Directions.NORTH_EAST, gameBoard);
                         if (x < 7) // EAST
-                            ValidMove(y, x, player, Directions.EAST, ref gameBoard);
+                            ValidMove(y, x, player, Directions.EAST, gameBoard);
                         if (y < 7 && x < 7) // SOUTH EAST
-                            ValidMove(y, x, player, Directions.SOUTH_EAST, ref gameBoard);
+                            ValidMove(y, x, player, Directions.SOUTH_EAST, gameBoard);
                         if (y < 7) // SOUTH
-                            ValidMove(y, x, player, Directions.SOUTH, ref gameBoard);
+                            ValidMove(y, x, player, Directions.SOUTH, gameBoard);
                         if (y < 7 && x > 0) // SOUTH WEST
-                            ValidMove(y, x, player, Directions.SOUTH_WEST, ref gameBoard);
+                            ValidMove(y, x, player, Directions.SOUTH_WEST, gameBoard);
                         if (x > 0) // WEST
-                            ValidMove(y, x, player, Directions.WEST, ref gameBoard);
+                            ValidMove(y, x, player, Directions.WEST, gameBoard);
                         if (y > 0 && x > 0) // NORTH WEST
-                            ValidMove(y, x, player, Directions.NORTH_WEST, ref gameBoard);
+                            ValidMove(y, x, player, Directions.NORTH_WEST, gameBoard);
                     }
                 }
             }
             return validMoves;
         }
-        public void ValidMove(int y, int x, Player player, Directions directionType, ref Disk[,] gameBoard)
+        public void ValidMove(int y, int x, Player player, Directions directionType, Disk[,] gameBoard)
         {
             if (Directions.NORTH == directionType) // NORTH
                 y--;
@@ -64,43 +64,61 @@
             {
                 if (LastDisk != player.Disk && LastDisk != Disk.BLANK)
                 {
-                    point.X = x;
-                    point.Y = y;
-                    validMoves.Add(point);
-                    point = null;
+                    position.X = x;
+                    position.Y = y;
+                    validMoves.Add(position);
+                    position = null;
                 }
                 return;
             }
             else if (gameBoard[y, x] != player.Disk)
             {
-                if (point == null)
+                if (position == null)
                 {
-                    point = new Point();
+                    position = new Position();
                 }
                 LastDisk = gameBoard[y, x];
-                point.FlipPoints.Add(y);
-                point.FlipPoints.Add(x);
-                //point.flipPoints[0] = y;
-                //point.flipPoints[1] = x;
+                position.FlipPositions.Add(y);
+                position.FlipPositions.Add(x);
+                //position.flipPoints[0] = y;
+                //position.flipPoints[1] = x;
                 if (Directions.NORTH == directionType && y > 0) // NORTH
-                    ValidMove(y, x, player, Directions.NORTH, ref gameBoard);
+                    ValidMove(y, x, player, Directions.NORTH, gameBoard);
                 else if (Directions.NORTH_EAST == directionType && y > 0 && x < 7) // NORTH EAST
-                    ValidMove(y, x, player, Directions.NORTH_EAST, ref gameBoard);
+                    ValidMove(y, x, player, Directions.NORTH_EAST, gameBoard);
                 else if (Directions.EAST == directionType && x < 7) // EAST
-                    ValidMove(y, x, player, Directions.EAST, ref gameBoard);
+                    ValidMove(y, x, player, Directions.EAST, gameBoard);
                 else if (Directions.SOUTH_EAST == directionType && y < 7 && x < 7) // SOUTH EAST
-                    ValidMove(y, x, player, Directions.SOUTH_EAST, ref gameBoard);
+                    ValidMove(y, x, player, Directions.SOUTH_EAST, gameBoard);
                 else if (Directions.SOUTH == directionType && y < 7) // SOUTH
-                    ValidMove(y, x, player, Directions.SOUTH, ref gameBoard);
+                    ValidMove(y, x, player, Directions.SOUTH, gameBoard);
                 else if (Directions.SOUTH_WEST == directionType && y < 7 && x > 0) // SOUTH WEST
-                    ValidMove(y, x, player, Directions.SOUTH_WEST, ref gameBoard);
+                    ValidMove(y, x, player, Directions.SOUTH_WEST, gameBoard);
                 else if (Directions.WEST == directionType && x > 0) // WEST
-                    ValidMove(y, x, player, Directions.WEST, ref gameBoard);
+                    ValidMove(y, x, player, Directions.WEST, gameBoard);
                 else if (Directions.NORTH_WEST == directionType && y > 0 && x > 0) // NORTH WEST
-                    ValidMove(y, x, player, Directions.NORTH_WEST, ref gameBoard);
+                    ValidMove(y, x, player, Directions.NORTH_WEST, gameBoard);
                 LastDisk = Disk.BLANK;
-                point = null;
+                position = null;
             }
+        }
+
+        public Disk[,] MakeMove(Position point, Disk[,] gameBoard, Player player)
+        {
+            player.numOfChanges = 0;
+
+            gameBoard[point.Y, point.X] = player.Disk;
+            player.numOfDisks++;
+
+            for (int i = 0; i <= point.FlipPositions.Count - 2 || i == 0; i += 2)
+            {
+                gameBoard[point.FlipPositions[i], point.FlipPositions[i + 1]] = player.Disk;
+                player.numOfChanges++;
+
+            }
+
+            player.numOfDisks += player.numOfChanges;
+            return gameBoard;
         }
     }
 }

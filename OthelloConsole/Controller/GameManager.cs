@@ -9,7 +9,7 @@ namespace OthelloConsole.Controller
         private Player? player2;
         private bool isPlaying = true;
         public Disk[,]? gameBoard = new Disk[8, 8];
-        public List<Point>? validMoves;
+        public List<Position>? validMoves;
         private GameBoard? board;
         private int roundCount = 1;
         private Player? player;
@@ -43,7 +43,7 @@ namespace OthelloConsole.Controller
                 if (validMoves.Count == 0) skippedRounds++;
                 else
                 {
-                    Point point = player.RequestMove(gameBoard, validMoves);
+                    Position point = player.RequestMove(gameBoard, validMoves);
                     gameBoard = board.MakeMove(point, gameBoard, player);
 
                     numOfChanges = player.numOfChanges;
