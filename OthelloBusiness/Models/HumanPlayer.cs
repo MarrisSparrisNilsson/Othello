@@ -2,6 +2,7 @@
 {
     public class HumanPlayer : Player
     {
+
         public HumanPlayer(string name, Disk disk)
         {
             Name = name;
@@ -15,7 +16,7 @@
                 Point? point = null;
                 lock (threadLock)
                 {
-                    Monitor.Wait(threadLock);
+                    //Monitor.Wait(threadLock);
                     foreach (Point p in validMoves)
                     {
                         Console.WriteLine($"({p.Y},{p.X})");
@@ -42,8 +43,6 @@
                             }
                         }
                         if (!isValidInput) Console.WriteLine("Invalid move, please try again!");
-                        //position[0] = int.Parse(moves[0]);
-                        //position[1] = int.Parse(moves[1]);
                     }
 
                     Monitor.PulseAll(threadLock);

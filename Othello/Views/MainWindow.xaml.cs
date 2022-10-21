@@ -1,8 +1,6 @@
 ﻿using OthelloPresentation.Commands;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace OthelloPresentation.Views
 {
@@ -35,10 +33,11 @@ namespace OthelloPresentation.Views
         //public GameWindowViewModel ViewModel { get; private set; } = new GameWindowViewModel();
 
 
-        public ObservableCollection<ObservableCollection<Brush>> Board { get; private set; } /*
-                                                                                              * Ha denna bara i GameGrid?
-                                                                                              * MainWindow updaterar inte längre spelbrädet.
-                                                                                              */
+        //public ObservableCollection<ObservableCollection<Brush>> Board { get; private set; }
+        /*
+        * Ha denna bara i GameGrid?
+        * MainWindow updaterar inte längre spelbrädet.
+        */
 
         /*
         * MainWindow ska innehålla:
@@ -51,19 +50,11 @@ namespace OthelloPresentation.Views
 
         public MainWindow()
         {
-            GameGrid grid = new GameGrid(Board);
+            //GameGrid grid = new GameGrid(Board);
 
             //DataContext = ViewModel;
             //gameManager = new GameManager(player1, player2);
-            Board = new ObservableCollection<ObservableCollection<Brush>>();
-            for (int row = 0; row < 8; ++row)
-            {
-                Board.Add(new ObservableCollection<Brush>());
-                for (int col = 0; col < 8; ++col)
-                {
-                    Board[row].Add(Brushes.Green);
-                }
-            }
+
             InitializeComponent();
             Play();
             setupDialog.gameManager.Play();

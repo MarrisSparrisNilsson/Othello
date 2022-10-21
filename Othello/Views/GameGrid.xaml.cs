@@ -12,17 +12,25 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class GameGrid : UserControl
     {
+        public int positionX { get; set; }
+        public int positionY { get; set; }
         private ObservableCollection<ObservableCollection<Brush>> Board { get; set; }
 
         /// <summary>
         /// This implementation is needed!
         /// </summary>
-        public GameGrid() { }
 
-        public GameGrid(ObservableCollection<ObservableCollection<Brush>> Board)
+        public GameGrid()
         {
-            this.Board = Board;
-
+            Board = new ObservableCollection<ObservableCollection<Brush>>();
+            for (int row = 0; row < 8; ++row)
+            {
+                Board.Add(new ObservableCollection<Brush>());
+                for (int col = 0; col < 8; ++col)
+                {
+                    Board[row].Add(Brushes.Green);
+                }
+            }
             InitializeComponent();
         }
 
@@ -40,10 +48,11 @@ namespace OthelloPresentation.Views
                 if (y >= 1) y -= 1;
                 //foreach (var item in collection)
                 //{
-
+                positionX = (int)x;
+                positionY = (int)y;
                 //if(gameManager.validMoves)
                 //}
-
+                //gameMananager.gameboard
                 Board[(int)y][(int)x] = Brushes.White;
             }
         }

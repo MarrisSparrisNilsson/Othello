@@ -17,7 +17,6 @@
                 Point? point = null;
                 lock (threadLock)
                 {
-                    Monitor.Wait(threadLock);
                     Thread.Sleep(2000);
                     //Thread.CurrentThread.Name = "Martin";
                     int[] position = new int[2];
@@ -35,6 +34,7 @@
                     //}
                     Console.WriteLine($"{Name} placed a disk at position: ({position[0]}, {position[1]})");
                     Monitor.PulseAll(threadLock);
+                    //Monitor.Wait(threadLock);
                 }
                 return MakeMove(point, gameBoard);
             });
