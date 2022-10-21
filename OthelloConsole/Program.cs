@@ -1,4 +1,4 @@
-﻿using OthelloBusiness.Controller;
+﻿using OthelloConsole.Controller;
 using OthelloConsole.Views;
 
 namespace OthelloConsole

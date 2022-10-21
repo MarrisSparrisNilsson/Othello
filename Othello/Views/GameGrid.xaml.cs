@@ -12,9 +12,9 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class GameGrid : UserControl
     {
-        public int positionX { get; set; }
-        public int positionY { get; set; }
-        private ObservableCollection<ObservableCollection<Brush>> Board { get; set; }
+        //public int positionX { get; set; }
+        //public int positionY { get; set; }
+        public ObservableCollection<ObservableCollection<Brush>> Board { get; private set; }
 
         /// <summary>
         /// This implementation is needed!
@@ -48,8 +48,8 @@ namespace OthelloPresentation.Views
                 if (y >= 1) y -= 1;
                 //foreach (var item in collection)
                 //{
-                positionX = (int)x;
-                positionY = (int)y;
+                //positionX = (int)x;
+                //positionY = (int)y;
                 //if(gameManager.validMoves)
                 //}
                 //gameMananager.gameboard

@@ -1,4 +1,6 @@
-﻿using OthelloPresentation.Commands;
+﻿using OthelloBusiness.Controller;
+using OthelloBusiness.Models;
+using OthelloPresentation.Commands;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,9 +11,9 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private Player? player1;
-        //private Player? player2;
-        //private GameManager? gameManager;
+        private Player? player1;
+        private Player? player2;
+        private GameManager? gameManager;
         private SetupGameDialog setupDialog = new();
 
 
@@ -53,11 +55,14 @@ namespace OthelloPresentation.Views
             //GameGrid grid = new GameGrid(Board);
 
             //DataContext = ViewModel;
-            //gameManager = new GameManager(player1, player2);
 
+
+            new SetupGameDialog(ref player1, ref player2);
+            //SetupGameDialog? game = new SetupGameDialog();
+            gameManager = new GameManager(player1, player2);
+            //Play();
             InitializeComponent();
-            Play();
-            setupDialog.gameManager.Play();
+            //setupDialog.gameManager.Play();
 
             //App.Current.Dispatcher.Invoke(() =>
             //{
