@@ -103,8 +103,10 @@
             }
         }
 
-        public Disk[,] MakeMove(Position pos, Disk[,] gameBoard, Player player)
+        public async Task<Disk[,]> MakeMoveAsync(Position pos, Disk[,] gameBoard, Player player)
         {
+            //return await Task.Run(() =>
+            //{
             player.numOfChanges = 0;
 
             gameBoard[pos.Y, pos.X] = player.Disk;
@@ -120,6 +122,7 @@
             player.numOfDisks += player.numOfChanges;
 
             return gameBoard;
+            //});
         }
     }
 }

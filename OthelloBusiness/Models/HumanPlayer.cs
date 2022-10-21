@@ -16,23 +16,26 @@
             return await Task.Run(() =>
             {
                 Position pos = new();
-                lock (threadLock)
+                //lock (threadLock)
+                //{
+                //    Monitor.Wait(threadLock);
+                while (true)
                 {
-                    Monitor.Wait(threadLock);
-                    //Thread.Sleep(5000);
+
+                    Thread.Sleep(50);
                     foreach (Position p in validMoves)
                     {
                         if (p.Y == Y && p.X == X)
                         {
                             pos = p;
-                            break;
+                            return pos;
                         }
                     }
 
 
                     //Monitor.PulseAll(pos);
+                    //}
                 }
-                return pos;
             });
         }
     }

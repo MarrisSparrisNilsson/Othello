@@ -1,7 +1,6 @@
 ﻿using OthelloBusiness.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,6 +32,10 @@ namespace OthelloPresentation.Views
                     Board[row].Add(Brushes.Green);
                 }
             }
+            Board[3][3] = Brushes.White;
+            Board[3][4] = Brushes.Black;
+            Board[4][3] = Brushes.Black;
+            Board[4][4] = Brushes.White;
             //UpdateGameBoard();
             InitializeComponent();
         }
@@ -56,8 +59,9 @@ namespace OthelloPresentation.Views
                         //Player as HumanPlayer player;
                         (MainWindow._GameManager.player as HumanPlayer).X = (int)x;
                         (MainWindow._GameManager.player as HumanPlayer).Y = (int)y;
+
+                        //{
                         //Board[(int)y][(int)x] = Brushes.White;
-                        Thread.Sleep(5000);
                         UpdateGameBoard();
                     }
                 }

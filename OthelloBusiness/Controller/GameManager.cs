@@ -35,8 +35,6 @@ namespace OthelloBusiness.Controller
 
         public async void Play()
         {
-
-
             //lock (board)
             //{
             //    Monitor.PulseAll(board);
@@ -61,10 +59,12 @@ namespace OthelloBusiness.Controller
                 if (validMoves.Count == 0) skippedRounds++;
                 else
                 {
+                    //await Task.Run(async () =>
+                    //{
                     Position position = await player.RequestMoveAsync(gameBoard, validMoves);
 
-                    gameBoard = board.MakeMove(position, gameBoard, player);
-
+                    gameBoard = await board.MakeMoveAsync(position, gameBoard, player);
+                    //});
                     //numOfChanges = board.MakeMove(player, move[0], move[1], gameBoard);
                     //player.numOfDisks += numOfChanges + 1;
                     numOfChanges = player.numOfChanges;
