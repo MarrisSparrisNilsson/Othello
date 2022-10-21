@@ -12,9 +12,9 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class GameGrid : UserControl
     {
-        //public int positionX { get; set; }
-        //public int positionY { get; set; }
-        public ObservableCollection<ObservableCollection<Brush>> Board { get; private set; }
+        public static int positionX { get; set; }
+        public static int positionY { get; set; }
+        public static ObservableCollection<ObservableCollection<Brush>> Board { get; set; }
 
         /// <summary>
         /// This implementation is needed!
@@ -37,7 +37,6 @@ namespace OthelloPresentation.Views
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(gGameBoard);
-            // Vi måste typ ha en if sats eller liknande som först kollar att den point som tryckts på matchar en punkt i valid moves.
             if (p.X > 60 && p.Y > 60)
             {
 
@@ -46,14 +45,18 @@ namespace OthelloPresentation.Views
 
                 if (x >= 1) x -= 1;
                 if (y >= 1) y -= 1;
-                //foreach (var item in collection)
+
+                //foreach (Position point in MainWindow._GameManager.validMoves)
                 //{
-                //positionX = (int)x;
-                //positionY = (int)y;
-                //if(gameManager.validMoves)
+                //    if (point.Y == y && point.X == x)
+                //    {
+                //        MainWindow._GameManager.player.X = (int)x;
+                //        MainWindow._GameManager.player.Y = (int)y;
+                //    }
                 //}
-                //gameMananager.gameboard
-                Board[(int)y][(int)x] = Brushes.White;
+
+
+                //Board[(int)y][(int)x] = Brushes.White;
             }
         }
     }

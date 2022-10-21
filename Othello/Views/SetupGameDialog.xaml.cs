@@ -10,36 +10,22 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class SetupGameDialog : Window
     {
-        public GameManager? gameManager { get; private set; }
+
 
         public enum PlayerType { HumanPlayer, ComputerPlayer }
 
         public ObservableCollection<PlayerType>? PlayerTypes { get; private set; } = new();
-        //private Player? player1 = new HumanPlayer("", Disk.BLACK);
         private Player? player1;
         private Player? player2;
-        //private Player? player2 = new ComputerPlayer("", Disk.BLACK);
 
-        public SetupGameDialog(ref Player player1, ref Player player2)
+        public SetupGameDialog()
         {
             InitializeComponent();
             PlayerTypes.Add(PlayerType.HumanPlayer);
             PlayerTypes.Add(PlayerType.ComputerPlayer);
             cbPlayerType1.SelectedIndex = 0;
             cbPlayerType2.SelectedIndex = 0;
-            this.player1 = player1;
-            this.player2 = player2;
         }
-        public SetupGameDialog() { }
-
-        //public SetupGameDialog()
-        //{
-        //    InitializeComponent();
-        //    PlayerTypes.Add(PlayerType.HumanPlayer);
-        //    PlayerTypes.Add(PlayerType.ComputerPlayer);
-        //    cbPlayerType1.SelectedIndex = 0;
-        //    cbPlayerType2.SelectedIndex = 0;
-        //}
 
         private void btnDialogStart_Click(object sender, RoutedEventArgs e)
         {
@@ -54,8 +40,8 @@ namespace OthelloPresentation.Views
             }
             else player2 = new ComputerPlayer(tbName2.Text, Disk.WHITE);
 
-            gameManager = new GameManager(player1, player2);
-            //gameManager.Play();
+            MainWindow._GameManager = new GameManager(player1, player2);
+            MainWindow._GameManager.Play();
         }
     }
 }

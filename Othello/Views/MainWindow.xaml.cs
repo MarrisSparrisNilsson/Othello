@@ -1,8 +1,11 @@
 ﻿using OthelloBusiness.Controller;
 using OthelloBusiness.Models;
 using OthelloPresentation.Commands;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using Point = OthelloBusiness.Models.Point;
 
 namespace OthelloPresentation.Views
 {
@@ -11,15 +14,7 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Player? player1;
-        private Player? player2;
-        private GameManager? gameManager;
-        private SetupGameDialog setupDialog = new();
-
-
-        private ICommand? _placeDiskCommand;
-        public ICommand PlaceDiskCmd =>
-        _placeDiskCommand ??= new PlaceDiskCommand();
+        public static GameManager? _GameManager { get; set; }
 
         private ICommand? _newGameCommand;
         public ICommand NewGameCmd =>
@@ -29,13 +24,8 @@ namespace OthelloPresentation.Views
         public ICommand GameExitCmd =>
         _gameExitCommand ??= new GameExitCommand();
 
-        private ICommand? _startGameCommand;
-        public ICommand StartGameCmd =>
-        _startGameCommand ??= new StartGameCommand();
         //public GameWindowViewModel ViewModel { get; private set; } = new GameWindowViewModel();
 
-
-        //public ObservableCollection<ObservableCollection<Brush>> Board { get; private set; }
         /*
         * Ha denna bara i GameGrid?
         * MainWindow updaterar inte längre spelbrädet.
@@ -49,84 +39,60 @@ namespace OthelloPresentation.Views
         4. Presenterar game status         
          */
 
-
         public MainWindow()
         {
-            //GameGrid grid = new GameGrid(Board);
-
-            //DataContext = ViewModel;
-
-
-            new SetupGameDialog(ref player1, ref player2);
-            //SetupGameDialog? game = new SetupGameDialog();
-            gameManager = new GameManager(player1, player2);
-            //Play();
             InitializeComponent();
-            //setupDialog.gameManager.Play();
-
-            //App.Current.Dispatcher.Invoke(() =>
-            //{
-            //    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
-            //});
-        }
-        void Play()
-        {
             while (true)
             {
-                //App.Current.Dispatcher.Invoke(() =>
-                //{
-                //    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
-                //    Thread.Sleep(50);
-                //    UpdateGameBoard();
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
+                    Thread.Sleep(50);
+                    UpdateGameBoard();
+                    Thread.Sleep(50);
+                    foreach (Point point in _GameManager.validMoves)
+                    {
+                        GameGrid.Board[(int)point.Y][(int)point.X] = Brushes.LightGray;
+                    }
+                });
 
-                //});
-                //        Tanken var att skapa gråa rutor för varje valid move
+                //Tanken var att skapa gråa rutor för varje valid move
 
-                //foreach (Point point in gameManager.validMoves)
-                //{
-                //    Board[(int)point.Y][(int)point.X] = Brushes.LightGray;
-                //}
+                if (_GameManager.skippedRounds == 2)
+                {
+                    if (_GameManager.player1.numOfDisks == _GameManager.player2.numOfDisks)
+                    {
+                        DrawnDialog drawnDialog = new DrawnDialog();
+                        drawnDialog.ShowDialog();
+                    }
+                    else
+                    {
+                        WinnerDialog winnerDialog = new WinnerDialog();
+                        winnerDialog.WinnerMessage = ((_GameManager.player1.numOfDisks > _GameManager.player2.numOfDisks) ? _GameManager.player1.Name : _GameManager.player2.Name) + "wins!";
+                        winnerDialog.ShowDialog();
+                    }
+                }
             }
         }
 
-        //private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    Point p = e.GetPosition(gGameBoard);
-        //    // Vi måste typ ha en if sats eller liknande som först kollar att den point som tryckts på matchar en punkt i valid moves.
-        //    if (p.X > 60 && p.Y > 60)
-        //    {
+        private void UpdateGameBoard()
+        {
+            for (int y = 0; y < _GameManager.gameBoard.GetLength(0); y++)
+            {
+                for (int x = 0; x < _GameManager.gameBoard.GetLength(1); x++)
+                {
+                    if (Disk.WHITE == _GameManager.gameBoard[y, x])
+                    {
+                        GameGrid.Board[y][x] = Brushes.White;
 
-        //        double y = Math.Floor(Math.Ceiling((double)p.Y) / 60);
-        //        double x = Math.Floor(Math.Ceiling((double)p.X) / 60);
-
-        //        if (x >= 1) x -= 1;
-        //        if (y >= 1) y -= 1;
-        //        //foreach (var item in collection)
-        //        //{
-
-        //        //if(gameManager.validMoves)
-        //        //}
-        //        Board[(int)y][(int)x] = Brushes.White;
-        //    }
-        //}
-
-        //private void UpdateGameBoard()
-        //{
-        //    for (int y = 0; y < gameManager.gameBoard.GetLength(0); y++)
-        //    {
-        //        for (int x = 0; x < gameManager.gameBoard.GetLength(1); x++)
-        //        {
-        //            if (Disk.WHITE == gameManager.gameBoard[y, x])
-        //            {
-        //                Board[y][x] = Brushes.White;
-
-        //            }
-        //            else if (Disk.BLACK == gameManager.gameBoard[y, x])
-        //            {
-        //                Board[y][x] = Brushes.Black;
-        //            }
-        //        }
-        //    }
-        //}
+                    }
+                    else if (Disk.BLACK == _GameManager.gameBoard[y, x])
+                    {
+                        GameGrid.Board[y][x] = Brushes.Black;
+                    }
+                    else GameGrid.Board[y][x] = Brushes.Green;
+                }
+            }
+        }
     }
 }
