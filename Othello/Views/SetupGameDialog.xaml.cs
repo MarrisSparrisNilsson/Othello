@@ -19,14 +19,27 @@ namespace OthelloPresentation.Views
         private Player? player1;
         private Player? player2;
         //private Player? player2 = new ComputerPlayer("", Disk.BLACK);
-        public SetupGameDialog()
+
+        public SetupGameDialog(ref Player player1, ref Player player2)
         {
             InitializeComponent();
             PlayerTypes.Add(PlayerType.HumanPlayer);
             PlayerTypes.Add(PlayerType.ComputerPlayer);
             cbPlayerType1.SelectedIndex = 0;
             cbPlayerType2.SelectedIndex = 0;
+            this.player1 = player1;
+            this.player2 = player2;
         }
+        public SetupGameDialog() { }
+
+        //public SetupGameDialog()
+        //{
+        //    InitializeComponent();
+        //    PlayerTypes.Add(PlayerType.HumanPlayer);
+        //    PlayerTypes.Add(PlayerType.ComputerPlayer);
+        //    cbPlayerType1.SelectedIndex = 0;
+        //    cbPlayerType2.SelectedIndex = 0;
+        //}
 
         private void btnDialogStart_Click(object sender, RoutedEventArgs e)
         {

@@ -58,7 +58,7 @@
                 <Separator/>
             </StackPanel>
 
-            <local:GameGrid Grid.Column="1" Width="500" Height="500"></local:GameGrid>
+            <local:GameGrid Grid.Column="1"></local:GameGrid>
 
             <!--<Border Grid.Column="1" BorderThickness="10" BorderBrush="black" Width="500" Height="500" Margin="50" Padding="20 8 0 0" Background="Green">
                 <Grid x:Name="gGameBoard" Margin="-80,-68,0,1" MouseDown="Grid_MouseDown">

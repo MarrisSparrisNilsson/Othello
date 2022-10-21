@@ -1,5 +1,5 @@
-﻿using OthelloBusiness.Controller;
-using OthelloBusiness.Models;
+﻿using OthelloConsole.Controller;
+using OthelloConsole.Models;
 
 namespace OthelloConsole.Views
 {
