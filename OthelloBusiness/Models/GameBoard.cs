@@ -103,21 +103,22 @@
             }
         }
 
-        public Disk[,] MakeMove(Position point, Disk[,] gameBoard, Player player)
+        public Disk[,] MakeMove(Position pos, Disk[,] gameBoard, Player player)
         {
             player.numOfChanges = 0;
 
-            gameBoard[point.Y, point.X] = player.Disk;
+            gameBoard[pos.Y, pos.X] = player.Disk;
             player.numOfDisks++;
 
-            for (int i = 0; i <= point.FlipPositions.Count - 2 || i == 0; i += 2)
+            for (int i = 0; i <= pos.FlipPositions.Count - 2 || i == 0; i += 2)
             {
-                gameBoard[point.FlipPositions[i], point.FlipPositions[i + 1]] = player.Disk;
+                gameBoard[pos.FlipPositions[i], pos.FlipPositions[i + 1]] = player.Disk;
                 player.numOfChanges++;
 
             }
 
             player.numOfDisks += player.numOfChanges;
+
             return gameBoard;
         }
     }

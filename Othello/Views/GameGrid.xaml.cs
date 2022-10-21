@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OthelloBusiness.Models;
+using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -31,6 +33,7 @@ namespace OthelloPresentation.Views
                     Board[row].Add(Brushes.Green);
                 }
             }
+            //UpdateGameBoard();
             InitializeComponent();
         }
 
@@ -46,17 +49,39 @@ namespace OthelloPresentation.Views
                 if (x >= 1) x -= 1;
                 if (y >= 1) y -= 1;
 
-                //foreach (Position point in MainWindow._GameManager.validMoves)
-                //{
-                //    if (point.Y == y && point.X == x)
-                //    {
-                //        MainWindow._GameManager.player.X = (int)x;
-                //        MainWindow._GameManager.player.Y = (int)y;
-                //    }
-                //}
+                foreach (Position pos in MainWindow._GameManager.validMoves)
+                {
+                    if (pos.Y == y && pos.X == x)
+                    {
+                        //Player as HumanPlayer player;
+                        (MainWindow._GameManager.player as HumanPlayer).X = (int)x;
+                        (MainWindow._GameManager.player as HumanPlayer).Y = (int)y;
+                        //Board[(int)y][(int)x] = Brushes.White;
+                        Thread.Sleep(5000);
+                        UpdateGameBoard();
+                    }
+                }
 
 
-                //Board[(int)y][(int)x] = Brushes.White;
+            }
+        }
+        private void UpdateGameBoard()
+        {
+            for (int y = 0; y < MainWindow._GameManager.gameBoard.GetLength(0); y++)
+            {
+                for (int x = 0; x < MainWindow._GameManager.gameBoard.GetLength(1); x++)
+                {
+                    if (Disk.WHITE == MainWindow._GameManager.gameBoard[y, x])
+                    {
+                        GameGrid.Board[y][x] = Brushes.White;
+
+                    }
+                    else if (Disk.BLACK == MainWindow._GameManager.gameBoard[y, x])
+                    {
+                        GameGrid.Board[y][x] = Brushes.Black;
+                    }
+                    else GameGrid.Board[y][x] = Brushes.Green;
+                }
             }
         }
     }

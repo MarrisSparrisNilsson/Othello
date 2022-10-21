@@ -34,7 +34,7 @@
             <ComboBox x:Name="cbPlayerType2" ItemsSource="{Binding Path=PlayerTypes}"/>
         </StackPanel>
         <WrapPanel Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Right" Margin="0 15 20 0">
-            <Button IsDefault="True" Name="btnDialogStart" Click="btnDialogStart_Click" MinWidth="60" Margin="0,0,10,0">_Start</Button>
+            <Button IsCancel="True" IsDefault="True" Name="btnDialogStart" Click="btnDialogStart_Click" MinWidth="60" Margin="0,0,10,0">_Start</Button>
             <Button IsCancel="True" MinWidth="60">_Cancel</Button>
         </WrapPanel>
     </Grid>

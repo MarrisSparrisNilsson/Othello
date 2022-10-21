@@ -15,17 +15,24 @@
         {
             return await Task.Run(() =>
             {
-                Position point = new();
+                Position pos = new();
                 lock (threadLock)
                 {
-                    //Monitor.Wait(threadLock);
+                    Monitor.Wait(threadLock);
+                    //Thread.Sleep(5000);
+                    foreach (Position p in validMoves)
+                    {
+                        if (p.Y == Y && p.X == X)
+                        {
+                            pos = p;
+                            break;
+                        }
+                    }
 
-                    point.X = X;
-                    point.Y = Y;
 
-                    Monitor.PulseAll(threadLock);
+                    //Monitor.PulseAll(pos);
                 }
-                return point;
+                return pos;
             });
         }
     }
