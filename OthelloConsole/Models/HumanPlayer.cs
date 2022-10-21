@@ -12,10 +12,12 @@
         public override Position RequestMove(Disk[,] gameBoard, List<Position> validMoves)
         {
             Position? point = null;
-            foreach (Position p in validMoves)
+
+            foreach (var p in validMoves)
             {
                 Console.WriteLine($"({p.Y},{p.X})");
             }
+
             bool isValidInput = false;
 
             while (!isValidInput)

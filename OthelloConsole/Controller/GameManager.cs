@@ -38,8 +38,8 @@ namespace OthelloConsole.Controller
                     ShowRoundInfo();
                 }
                 int numOfChanges = 0;
-
                 validMoves = board.ValidMoves(player, gameBoard);
+
                 if (validMoves.Count == 0) skippedRounds++;
                 else
                 {
@@ -74,21 +74,25 @@ namespace OthelloConsole.Controller
                 Console.WriteLine();
                 for (int x = 0; x < gameBoard.GetLength(1); x++)
                 {
-
                     if (gameBoard[y, x] == Disk.BLANK)
                     {
-                        Console.Write("0 ");
+                        Console.BackgroundColor = ConsoleColor.Green;
+                        Console.Write("  ");
                     }
                     else if (gameBoard[y, x] == Disk.BLACK)
                     {
-                        Console.Write("B ");
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Write("  ");
                     }
                     else
                     {
-                        Console.Write("W ");
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.Write("  ");
                     }
                 }
+                Console.BackgroundColor = ConsoleColor.Black;
             }
+
             Console.WriteLine("\n");
         }
 
@@ -107,7 +111,19 @@ namespace OthelloConsole.Controller
             Console.WriteLine($"{player1.Disk}: {player1.numOfDisks}");
             Console.WriteLine($"{player2.Disk}: {player2.numOfDisks}");
             Console.WriteLine($"\nRound: {roundCount++}");
-            Console.WriteLine(player.Name + " - " + player.Disk);
+            //Console.WriteLine(player.Name + " - " + player.Disk);
+            Console.Write(player.Name + " - ");
+
+            if (player.Disk == Disk.WHITE)
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+            }
+            Console.Write(player.Disk);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine();
         }
     }
 }
