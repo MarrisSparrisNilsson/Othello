@@ -39,8 +39,31 @@
                     }
                 }
             }
-            return validMoves;
+
+            List<Position> filteredList = new List<Position>();
+
+            foreach (Position p in validMoves)
+            {
+                bool noMatchingPoints = true;
+                for (int i = 0; i < filteredList.Count; i++)
+                {
+                    if ((filteredList[i].X == p.X && filteredList[i].Y == p.Y))
+                    {
+                        for (int j = 0; j <= p.FlipPositions.Count - 2; j += 2)
+                        {
+                            filteredList[i].FlipPositions.Add(p.FlipPositions[j]);
+                            filteredList[i].FlipPositions.Add(p.FlipPositions[j + 1]);
+                        }
+                        noMatchingPoints = false;
+                    }
+                }
+                if (noMatchingPoints)
+                    filteredList.Add(p);
+            }
+
+            return filteredList;
         }
+
         public void ValidMove(int y, int x, Player player, Directions directionType, Disk[,] gameBoard)
         {
             if (Directions.NORTH == directionType) // NORTH
@@ -112,7 +135,7 @@
             gameBoard[pos.Y, pos.X] = player.Disk;
             player.numOfDisks++;
 
-            for (int i = 0; i <= pos.FlipPositions.Count - 2 || i == 0; i += 2)
+            for (int i = 0; i <= pos.FlipPositions.Count - 2; i += 2)
             {
                 gameBoard[pos.FlipPositions[i], pos.FlipPositions[i + 1]] = player.Disk;
                 player.numOfChanges++;

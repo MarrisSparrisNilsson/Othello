@@ -69,7 +69,7 @@ namespace OthelloBusiness.Controller
                     numOfChanges = player.numOfChanges;
                     skippedRounds = 0;
                 }
-                player = player2.Name == player.Name ? player1 : player2;
+                player = player2.Disk == player.Disk ? player1 : player2;
                 player.numOfDisks -= numOfChanges;
                 if (skippedRounds == 2) break;
 

@@ -13,10 +13,15 @@
         {
             Position? point = null;
 
-            foreach (var p in validMoves)
+            foreach (Position p in validMoves)
             {
-                Console.WriteLine($"({p.Y},{p.X})");
+                Console.WriteLine($"({p.Y},{p.X}) - +{(p.FlipPositions.Count / 2) + 1}");
             }
+
+            //foreach (Position p in validMoves)
+            //{
+            //    Console.WriteLine($"({p.Y},{p.X})");
+            //}
 
             bool isValidInput = false;
 

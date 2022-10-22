@@ -4,7 +4,7 @@
     {
         private Disk LastDisk = Disk.BLANK;
         private List<Position> validMoves;
-        private Position? point = null;
+        private Position? position = null;
 
         public GameBoard()
         {
@@ -39,7 +39,29 @@
                     }
                 }
             }
-            return validMoves;
+
+            List<Position> filteredList = new List<Position>();
+
+            foreach (Position p in validMoves)
+            {
+                bool noMatchingPoints = true;
+                for (int i = 0; i < filteredList.Count; i++)
+                {
+                    if ((filteredList[i].X == p.X && filteredList[i].Y == p.Y))
+                    {
+                        for (int j = 0; j <= p.FlipPositions.Count - 2; j += 2)
+                        {
+                            filteredList[i].FlipPositions.Add(p.FlipPositions[j]);
+                            filteredList[i].FlipPositions.Add(p.FlipPositions[j + 1]);
+                        }
+                        noMatchingPoints = false;
+                    }
+                }
+                if (noMatchingPoints)
+                    filteredList.Add(p);
+            }
+
+            return filteredList;
         }
         public void ValidMove(int y, int x, Player player, Directions directionType, Disk[,] gameBoard)
         {
@@ -64,24 +86,23 @@
             {
                 if (LastDisk != player.Disk && LastDisk != Disk.BLANK)
                 {
-                    point.X = x;
-                    point.Y = y;
-                    validMoves.Add(point);
-                    point = null;
+                    position.X = x;
+                    position.Y = y;
+                    validMoves.Add(position);
+                    position = null;
                 }
                 return;
             }
             else if (gameBoard[y, x] != player.Disk)
             {
-                if (point == null)
+                if (position == null)
                 {
-                    point = new Position();
+                    position = new Position();
                 }
                 LastDisk = gameBoard[y, x];
-                point.FlipPositions.Add(y);
-                point.FlipPositions.Add(x);
-                //point.flipPoints[0] = y;
-                //point.flipPoints[1] = x;
+                position.FlipPositions.Add(y);
+                position.FlipPositions.Add(x);
+
                 if (Directions.NORTH == directionType && y > 0) // NORTH
                     ValidMove(y, x, player, Directions.NORTH, gameBoard);
                 else if (Directions.NORTH_EAST == directionType && y > 0 && x < 7) // NORTH EAST
@@ -99,20 +120,20 @@
                 else if (Directions.NORTH_WEST == directionType && y > 0 && x > 0) // NORTH WEST
                     ValidMove(y, x, player, Directions.NORTH_WEST, gameBoard);
                 LastDisk = Disk.BLANK;
-                point = null;
+                position = null;
             }
         }
 
-        public Disk[,] MakeMove(Position point, Disk[,] gameBoard, Player player)
+        public Disk[,] MakeMove(Position pos, Disk[,] gameBoard, Player player)
         {
             player.numOfChanges = 0;
 
-            gameBoard[point.Y, point.X] = player.Disk;
+            gameBoard[pos.Y, pos.X] = player.Disk;
             player.numOfDisks++;
 
-            for (int i = 0; i <= point.FlipPositions.Count - 2 || i == 0; i += 2)
+            for (int i = 0; i <= pos.FlipPositions.Count - 2; i += 2)
             {
-                gameBoard[point.FlipPositions[i], point.FlipPositions[i + 1]] = player.Disk;
+                gameBoard[pos.FlipPositions[i], pos.FlipPositions[i + 1]] = player.Disk;
                 player.numOfChanges++;
 
             }

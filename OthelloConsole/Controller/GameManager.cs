@@ -49,7 +49,7 @@ namespace OthelloConsole.Controller
                     numOfChanges = player.numOfChanges;
                     skippedRounds = 0;
                 }
-                player = player2.Name == player.Name ? player1 : player2;
+                player = player2.Disk == player.Disk ? player1 : player2;
                 player.numOfDisks -= numOfChanges;
                 if (skippedRounds == 2) break;
 
@@ -59,8 +59,9 @@ namespace OthelloConsole.Controller
             {
                 ShowGameBoard();
                 Console.WriteLine("The game ended with a draw!");
+                Console.WriteLine($"\n{player1.Name} got: {player1.numOfDisks} disks!");
+                Console.WriteLine($"{player2.Name} got: {player2.numOfDisks} disks!");
             }
-
             else
             {
                 ShowGameBoard();
@@ -69,30 +70,40 @@ namespace OthelloConsole.Controller
         }
         private void ShowGameBoard()
         {
+            Console.WriteLine();
             for (int y = 0; y < gameBoard.GetLength(0); y++)
             {
-                Console.WriteLine();
                 for (int x = 0; x < gameBoard.GetLength(1); x++)
                 {
                     if (gameBoard[y, x] == Disk.BLANK)
-                    {
                         Console.BackgroundColor = ConsoleColor.Green;
-                        Console.Write("  ");
-                    }
                     else if (gameBoard[y, x] == Disk.BLACK)
-                    {
                         Console.BackgroundColor = ConsoleColor.Black;
-                        Console.Write("  ");
-                    }
                     else
-                    {
                         Console.BackgroundColor = ConsoleColor.White;
+
+                    Console.Write("  ");
+
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                    if (x < gameBoard.GetLength(1) - 1)
+                        Console.Write("  ");
+
+                }
+                Console.BackgroundColor = ConsoleColor.Black;
+                if (y != gameBoard.GetLength(0) - 1)
+                {
+                    for (int x = 0; x < gameBoard.GetLength(1) * 2 - 1; x++)
+                    {
+                        if (x == 0) Console.Write("\n");
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
                         Console.Write("  ");
                     }
                 }
                 Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine();
+                //Console.WriteLine("\n");
             }
-
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine("\n");
         }
 
@@ -101,7 +112,7 @@ namespace OthelloConsole.Controller
             Console.WriteLine($"\n{player1.Name} got: {player1.numOfDisks} disks!");
             Console.WriteLine($"{player2.Name} got: {player2.numOfDisks} disks!");
             Console.WriteLine(
-                $"Congratulations " +
+                $"Congratulations! " +
                 $"{(player1.numOfDisks > player2.numOfDisks ? player1.Name : player2.Name)}" +
                 $" won the game of Othello!");
         }
