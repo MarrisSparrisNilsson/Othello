@@ -1,4 +1,5 @@
 ﻿using OthelloBusiness.Controller;
+using OthelloBusiness.Models;
 using OthelloPresentation.Commands;
 using System.Windows;
 using System.Windows.Input;
@@ -39,6 +40,15 @@ namespace OthelloPresentation.Views
         {
             InitializeComponent();
         }
+
+        public void StartGame(Player player1, Player player2)
+        {
+            GameGrid grid = new GameGrid();
+            MainWindow._GameManager = new GameManager(player1, player2, grid.UpdateGameBoard);
+            MainWindow._GameManager.Play();
+        }
+
+
         //while (true)
         //{
         //    App.Current.Dispatcher.Invoke(() =>

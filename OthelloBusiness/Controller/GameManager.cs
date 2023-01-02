@@ -17,7 +17,14 @@ namespace OthelloBusiness.Controller
 
         private GameBoard? board;
 
-        public GameManager(Player player1, Player player2)
+        //public GameManager(Player player1, Player player2, GameBoard grid)
+        //{
+        //    board = grid;
+
+
+        //}
+
+        public GameManager(Player player1, Player player2, Action<Disk[,], List<Position>> notifyGameBoardChanged)
         {
             board = new GameBoard();
             this.player1 = player1;
@@ -26,15 +33,12 @@ namespace OthelloBusiness.Controller
             gameBoard[3, 4] = Disk.BLACK;
             gameBoard[4, 3] = Disk.BLACK;
             gameBoard[4, 4] = Disk.WHITE;
-        }
-
-        public GameManager(Player player1, Player player2, Action<Disk[,], List<Position>> notifyGameBoardChanged)
-        {
             this.notifyGameBoardChanged = notifyGameBoardChanged;
         }
         public async void Play()
         {
             player = player1;
+            UpdateObservers();
             while (isPlaying)
             {
                 int numOfChanges = 0;
@@ -52,8 +56,8 @@ namespace OthelloBusiness.Controller
                 }
                 player = player2.Name == player.Name ? player1 : player2;
                 player.numOfDisks -= numOfChanges;
+                UpdateObservers();
                 if (skippedRounds == 2) break;
-
             }
         }
 

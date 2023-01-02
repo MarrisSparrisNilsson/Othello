@@ -5,6 +5,7 @@
         private Disk LastDisk = Disk.BLANK;
         private List<Position> validMoves;
         private Position? position = null;
+        public Disk[,]? gameBoard = new Disk[8, 8];
 
         public GameBoard()
         {

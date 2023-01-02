@@ -1,5 +1,4 @@
-﻿using OthelloBusiness.Controller;
-using OthelloBusiness.Models;
+﻿using OthelloBusiness.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -40,8 +39,7 @@ namespace OthelloPresentation.Views
             }
             else player2 = new ComputerPlayer(tbName2.Text, Disk.WHITE);
 
-            MainWindow._GameManager = new GameManager(player1, player2);
-            MainWindow._GameManager.Play();
+            ((MainWindow)App.Current.MainWindow).StartGame(player1, player2);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using OthelloBusiness.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -35,10 +35,10 @@ namespace OthelloPresentation.Views
                     Board[row].Add(Brushes.Green);
                 }
             }
-            Board[3][3] = Brushes.White;
-            Board[3][4] = Brushes.Black;
-            Board[4][3] = Brushes.Black;
-            Board[4][4] = Brushes.White;
+            //Board[3][3] = Brushes.White;
+            //Board[3][4] = Brushes.Black;
+            //Board[4][3] = Brushes.Black;
+            //Board[4][4] = Brushes.White;
             //UpdateGameBoard();
             InitializeComponent();
         }
@@ -57,47 +57,42 @@ namespace OthelloPresentation.Views
 
                 MainWindow._GameManager.SetMove((int)x, (int)y);
 
-                foreach (Position pos in MainWindow._GameManager.validMoves)
-                {
-                    if (pos.Y == y && pos.X == x)
-                    {
-                        //Player as HumanPlayer player;
-                        (MainWindow._GameManager.player as HumanPlayer).X = (int)x;
-                        (MainWindow._GameManager.player as HumanPlayer).Y = (int)y;
-                        Thread.Sleep(1000);
-                        App.Current.Dispatcher.Invoke(() =>
-                        {
-                            UpdateGameBoard();
-                            foreach (Position pos in MainWindow._GameManager.validMoves)
-                            {
-                                Board[(int)pos.Y][(int)pos.X] = Brushes.Gray;
-                            }
-                        });
-                        //{
-                        //Board[(int)y][(int)x] = Brushes.White;
-
-                    }
-                }
+                //foreach (Position pos in MainWindow._GameManager.validMoves)
+                //{
+                //    if (pos.Y == y && pos.X == x)
+                //    {
+                //        (MainWindow._GameManager.player as HumanPlayer).X = (int)x;
+                //        (MainWindow._GameManager.player as HumanPlayer).Y = (int)y;
+                //    }
+                //}
             }
         }
-        private void UpdateGameBoard()
-        {
-            for (int y = 0; y < MainWindow._GameManager.gameBoard.GetLength(0); y++)
-            {
-                for (int x = 0; x < MainWindow._GameManager.gameBoard.GetLength(1); x++)
-                {
-                    if (Disk.WHITE == MainWindow._GameManager.gameBoard[y, x])
-                    {
-                        GameGrid.Board[y][x] = Brushes.White;
 
-                    }
-                    else if (Disk.BLACK == MainWindow._GameManager.gameBoard[y, x])
+        public void UpdateGameBoard(Disk[,] gameBoardCopy, List<Position> validMoves)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                for (int y = 0; y < gameBoardCopy.GetLength(0); y++)
+                {
+                    for (int x = 0; x < gameBoardCopy.GetLength(1); x++)
                     {
-                        GameGrid.Board[y][x] = Brushes.Black;
+                        if (Disk.WHITE == gameBoardCopy[y, x])
+                        {
+                            Board[y][x] = Brushes.White;
+                        }
+                        else if (Disk.BLACK == gameBoardCopy[y, x])
+                        {
+                            Board[y][x] = Brushes.Black;
+                        }
+                        else Board[y][x] = Brushes.Green;
                     }
-                    else GameGrid.Board[y][x] = Brushes.Green;
                 }
-            }
+
+                foreach (Position pos in validMoves)
+                {
+                    Board[(int)pos.Y][(int)pos.X] = Brushes.Gray;
+                }
+            });
         }
     }
 }
