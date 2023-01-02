@@ -14,23 +14,17 @@
         {
             return await Task.Run(() =>
             {
+                Thread.Sleep(1000);
                 Position? position = null;
-                lock (threadLock)
+                foreach (Position move in validMoves)
                 {
-                    Thread.Sleep(2000);
-                    Monitor.Wait(threadLock);
-                    foreach (Position move in validMoves)
+                    if ((move.Y == 0 && move.X == 0) || (move.Y == 0 && move.X == 7) || (move.Y == 7 && move.X == 0) || (move.Y == 7 && move.X == 7))
                     {
-                        if ((move.Y == 0 && move.X == 0) || (move.Y == 0 && move.X == 7) || (move.Y == 7 && move.X == 0) || (move.Y == 7 && move.X == 7))
-                        {
-                            position = move;
-                            break;
-                        }
+                        position = move;
+                        break;
                     }
-                    if (position == null) position = validMoves[random.Next(validMoves.Count)];
-
-                    Monitor.PulseAll(threadLock);
                 }
+                if (position == null) position = validMoves[random.Next(validMoves.Count)];
                 return position;
             });
         }

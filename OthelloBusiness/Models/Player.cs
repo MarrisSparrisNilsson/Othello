@@ -16,5 +16,8 @@
 
 
         public abstract Task<Position> RequestMoveAsync(Disk[,] gameBoard, List<Position> validMoves);
+
+        public virtual void SetMove(int x, int y) { }
+
     }
 }

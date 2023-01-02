@@ -23,6 +23,7 @@ namespace OthelloPresentation.Views
         /// This implementation is needed!
         /// </summary>
 
+
         public GameGrid()
         {
             Board = new ObservableCollection<ObservableCollection<Brush>>();
@@ -53,6 +54,8 @@ namespace OthelloPresentation.Views
 
                 if (x >= 1) x -= 1;
                 if (y >= 1) y -= 1;
+
+                MainWindow._GameManager.SetMove((int)x, (int)y);
 
                 foreach (Position pos in MainWindow._GameManager.validMoves)
                 {

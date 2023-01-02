@@ -14,33 +14,33 @@
         public async override Task<Position> RequestMoveAsync(Disk[,] gameBoard, List<Position> validMoves)
         {
             Position pos = new();
-            //lock (threadLock)
-            //{
-            //    Monitor.Wait(threadLock);
             return await Task.Run(() =>
             {
                 lock (threadLock)
                 {
-                    //while (X == -1)
-                    //waitHandle.WaitOne();
-                    //Thread.Sleep(1000);
                     Monitor.Wait(threadLock);
+                    pos.X = X;
+                    pos.Y = Y;
                     foreach (Position p in validMoves)
                     {
                         if (p.Y == Y && p.X == X)
                         {
                             pos = p;
-                            Monitor.Pulse(threadLock);
                             break;
                         }
                     }
-                    Monitor.PulseAll(pos);
                 }
                 return pos;
-
-
-                //}
             });
+        }
+        public override void SetMove(int x, int y)
+        {
+            lock (threadLock)
+            {
+                X = x;
+                Y = y;
+                Monitor.PulseAll(threadLock);
+            }
         }
     }
 }

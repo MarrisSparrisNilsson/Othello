@@ -13,10 +13,9 @@ namespace OthelloBusiness.Controller
         private bool isPlaying = true;
         public Disk[,]? gameBoard = new Disk[8, 8];
         public List<Position>? validMoves;
+        private Action<Disk[,], List<Position>> notifyGameBoardChanged;
 
         private GameBoard? board;
-        //private Thread computerThread;
-
 
         public GameManager(Player player1, Player player2)
         {
@@ -27,76 +26,53 @@ namespace OthelloBusiness.Controller
             gameBoard[3, 4] = Disk.BLACK;
             gameBoard[4, 3] = Disk.BLACK;
             gameBoard[4, 4] = Disk.WHITE;
-            //computerThread = new Thread(Play);
-            //computerThread.Start();
-            //computerThread.Name = "computerThread";
         }
 
+        public GameManager(Player player1, Player player2, Action<Disk[,], List<Position>> notifyGameBoardChanged)
+        {
+            this.notifyGameBoardChanged = notifyGameBoardChanged;
+        }
         public async void Play()
         {
-            //lock (board)
-            //{
-            //    Monitor.PulseAll(board);
-
-            //    Monitor.Wait(board);
-
-            //try
-            //{
             player = player1;
             while (isPlaying)
             {
-
-                // Nedan används för att växla till gui tråden. alltså primärtråden.
-                //App.Current.Dispatcher.Invoke(() =>
-                //{
-                //    // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
-                //});
                 int numOfChanges = 0;
-
 
                 validMoves = board.ValidMoves(player, gameBoard);
                 if (validMoves.Count == 0) skippedRounds++;
                 else
                 {
-                    //await Task.Run(async () =>
-                    //{
                     Position position = await player.RequestMoveAsync(gameBoard, validMoves);
-
                     gameBoard = await board.MakeMoveAsync(position, gameBoard, player);
-                    //});
                     //numOfChanges = board.MakeMove(player, move[0], move[1], gameBoard);
                     //player.numOfDisks += numOfChanges + 1;
                     numOfChanges = player.numOfChanges;
                     skippedRounds = 0;
                 }
-                player = player2.Disk == player.Disk ? player1 : player2;
+                player = player2.Name == player.Name ? player1 : player2;
                 player.numOfDisks -= numOfChanges;
                 if (skippedRounds == 2) break;
 
             }
-            //Monitor.PulseAll(board);
-            //Stop();
-
-            //if (player1.numOfDisks == player2.numOfDisks)
-            //{
-
-            //}
-            //else
-            //{
-
-            //}
-
-            //}
-            //catch (ThreadInterruptedException)
-            //{
-            //    Console.WriteLine("Computer player is done.");
-            //}
-            //}
         }
 
-        //public void Stop()
-        //{
-        //    computerThread.Interrupt();
-        //}
+        public void SetMove(int x, int y)
+        {
+            player.SetMove(x, y);
+        }
+
+        private void UpdateObservers()
+        {
+            if (notifyGameBoardChanged != null)
+            {
+                Disk[,] gameBoardCopy = new Disk[8, 8];
+                for (int row = 0; row < 8; ++row)
+                    for (int col = 0; col < 8; ++col)
+                        gameBoardCopy[row, col] = gameBoard[row, col];
+                List<Position> validMoves = board.ValidMoves(player, gameBoard);
+                notifyGameBoardChanged(gameBoardCopy, validMoves);
+            }
+        }
     }
 }
