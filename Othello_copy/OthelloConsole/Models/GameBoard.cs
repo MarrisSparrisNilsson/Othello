@@ -1,18 +1,13 @@
-﻿namespace OthelloBusiness.Models
+﻿namespace OthelloConsole.Models
 {
     public class GameBoard
     {
         private Disk LastDisk = Disk.BLANK;
         private List<Position> validMoves;
         private Position? position = null;
-        public Disk[,]? gameBoard = new Disk[8, 8];
 
         public GameBoard()
         {
-            gameBoard[3, 3] = Disk.WHITE;
-            gameBoard[3, 4] = Disk.BLACK;
-            gameBoard[4, 3] = Disk.BLACK;
-            gameBoard[4, 4] = Disk.WHITE;
             validMoves = new List<Position>();
         }
 
@@ -68,7 +63,6 @@
 
             return filteredList;
         }
-
         public void ValidMove(int y, int x, Player player, Directions directionType, Disk[,] gameBoard)
         {
             if (Directions.NORTH == directionType) // NORTH
@@ -108,8 +102,7 @@
                 LastDisk = gameBoard[y, x];
                 position.FlipPositions.Add(y);
                 position.FlipPositions.Add(x);
-                //position.flipPoints[0] = y;
-                //position.flipPoints[1] = x;
+
                 if (Directions.NORTH == directionType && y > 0) // NORTH
                     ValidMove(y, x, player, Directions.NORTH, gameBoard);
                 else if (Directions.NORTH_EAST == directionType && y > 0 && x < 7) // NORTH EAST
@@ -131,10 +124,8 @@
             }
         }
 
-        public async Task<Disk[,]> MakeMoveAsync(Position pos, Disk[,] gameBoard, Player player)
+        public Disk[,] MakeMove(Position pos, Disk[,] gameBoard, Player player)
         {
-            //return await Task.Run(() =>
-            //{
             player.numOfChanges = 0;
 
             gameBoard[pos.Y, pos.X] = player.Disk;
@@ -148,9 +139,7 @@
             }
 
             player.numOfDisks += player.numOfChanges;
-
             return gameBoard;
-            //});
         }
     }
 }

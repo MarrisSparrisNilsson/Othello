@@ -1,8 +1,6 @@
 ﻿using OthelloBusiness.Controller;
 using OthelloBusiness.Models;
 using OthelloPresentation.Commands;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,7 +9,7 @@ namespace OthelloPresentation.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         public static GameManager? _GameManager { get; set; }
 
@@ -20,40 +18,8 @@ namespace OthelloPresentation.Views
         _newGameCommand ??= new NewGameCommand();
 
         private ICommand? _gameExitCommand;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         public ICommand GameExitCmd =>
         _gameExitCommand ??= new GameExitCommand();
-
-        private string whiteName;
-        private string blackName;
-
-        public string WhiteName
-        {
-            get { return whiteName; }
-            set
-            {
-                whiteName = value;
-                OnPropertyChanged();
-            }
-        }
-        public string BlackName
-        {
-            get { return blackName; }
-            set
-            {
-                blackName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-
 
         //public GameWindowViewModel ViewModel { get; private set; } = new GameWindowViewModel();
 
@@ -77,8 +43,6 @@ namespace OthelloPresentation.Views
 
         public void StartGame(Player player1, Player player2)
         {
-            WhiteName = player1.Name;
-            BlackName = player2.Name;
             GameGrid grid = new GameGrid();
             MainWindow._GameManager = new GameManager(player1, player2, grid.UpdateGameBoard);
             MainWindow._GameManager.Play();

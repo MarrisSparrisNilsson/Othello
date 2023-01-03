@@ -6,7 +6,7 @@
         xmlns:viewmodels="clr-namespace:OthelloPresentation.ViewModels"
         xmlns:local="clr-namespace:OthelloPresentation.Views"
         mc:Ignorable="d"
-        WindowState="Maximized"
+        Width="1000"
         Title="Othello"
         WindowStartupLocation="CenterScreen"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
@@ -48,32 +48,14 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <GridSplitter Grid.Column="0" Width="50" Background="Black" />
-            <StackPanel Grid.Column="0" VerticalAlignment="Stretch" Background= "SaddleBrown">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Round:" FontSize="30" Foreground="Black" FontWeight="Bold"/>
-                    <Label Content="" Name="RoundNum" FontSize="30" Foreground="Black" FontWeight="Bold"/>
-                </StackPanel>
-                <Rectangle Fill="Black" Height="3"/>
-
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Player 1:" Foreground="White" FontSize="20" FontWeight="Bold"/>
-                    <Label Content="{Binding Path=WhiteName}" Name="playerOneLbl" MaxWidth="100" Foreground="White" FontSize="20" FontWeight="Bold"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="White score:" Foreground="White" FontSize="15" FontWeight="Bold"/>
-                    <Label Content="30" Name="whiteScore" Foreground="White" FontSize="15" FontWeight="Bold"/>
-                </StackPanel>
-                <Rectangle Fill="Black" Height="3"/>
-
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Player 2:" FontSize="20" FontWeight="Bold"/>
-                    <Label Content="{Binding Path=BlackName}" Name="playerTwoLbl" MaxWidth="100" FontSize="20" FontWeight="Bold"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Black score:" FontSize="15" FontWeight="Bold"/>
-                    <Label Content="29" Name="blackScore" FontSize="15" FontWeight="Bold"/>
-                </StackPanel>
-                <Rectangle Fill="Black" Height="3"/>
+            <StackPanel Grid.Column="0" VerticalAlignment="Stretch" Background= "#FF563700">
+                <Label Content="Round: " FontFamily="Impact" />
+                <Label Content="Player 1:" Foreground="White" />
+                <Label Content="White: " Foreground="White"/>
+                <Separator/>
+                <Label Content="Player 2:"/>
+                <Label Content="Black: " />
+                <Separator/>
             </StackPanel>
 
             <local:GameGrid Grid.Column="1"></local:GameGrid>

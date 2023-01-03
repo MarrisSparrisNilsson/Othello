@@ -14,7 +14,6 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class GameGrid : UserControl
     {
-        //INotifyCollectionChanged
 
         public static int positionX { get; set; }
         public static int positionY { get; set; }
@@ -23,6 +22,7 @@ namespace OthelloPresentation.Views
         /// <summary>
         /// This implementation is needed!
         /// </summary>
+
 
         public GameGrid()
         {
@@ -35,20 +35,13 @@ namespace OthelloPresentation.Views
                     Board[row].Add(Brushes.Green);
                 }
             }
-            Board[3][3] = Brushes.White;
-            Board[3][4] = Brushes.Black;
-            Board[4][3] = Brushes.Black;
-            Board[4][4] = Brushes.White;
+            //Board[3][3] = Brushes.White;
+            //Board[3][4] = Brushes.Black;
+            //Board[4][3] = Brushes.Black;
+            //Board[4][4] = Brushes.White;
             //UpdateGameBoard();
             InitializeComponent();
         }
-
-        //public event NotifyCollectionChangedEventHandler? CollectionChanged;
-
-        //protected void OnCollectionChanged([CallerMemberName] string name = null)
-        //{
-        //    CollectionChanged?.Invoke(this, new CollectionChangeEventArgs(name));
-        //}
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -97,7 +90,7 @@ namespace OthelloPresentation.Views
 
                 foreach (Position pos in validMoves)
                 {
-                    Board[pos.Y][pos.X] = Brushes.Gray;
+                    Board[(int)pos.Y][(int)pos.X] = Brushes.Gray;
                 }
             });
         }

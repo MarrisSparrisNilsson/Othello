@@ -33,7 +33,6 @@
                 return pos;
             });
         }
-
         public override void SetMove(int x, int y)
         {
             lock (threadLock)
