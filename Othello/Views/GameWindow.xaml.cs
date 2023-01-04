@@ -9,9 +9,9 @@ using System.Windows.Input;
 namespace OthelloPresentation.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class GameWindow : Window, INotifyPropertyChanged
     {
         public static GameManager? _GameManager { get; set; }
 
@@ -25,6 +25,20 @@ namespace OthelloPresentation.Views
 
         public ICommand GameExitCmd =>
         _gameExitCommand ??= new GameExitCommand();
+
+
+
+        private int roundNum;
+
+        public int RoundNum
+        {
+            get { return roundNum; }
+            set
+            {
+                roundNum = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string whiteName;
         private string blackName;
@@ -48,6 +62,28 @@ namespace OthelloPresentation.Views
             }
         }
 
+        private int wScore = 0;
+        private int bScore = 0;
+
+        public int WhiteScore
+        {
+            get { return wScore; }
+            set
+            {
+                wScore = value;
+                OnPropertyChanged();
+            }
+        }
+        public int BlackScore
+        {
+            get { return bScore; }
+            set
+            {
+                bScore = value;
+                OnPropertyChanged();
+            }
+        }
+
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -59,31 +95,41 @@ namespace OthelloPresentation.Views
 
         /*
         * Ha denna bara i GameGrid?
-        * MainWindow updaterar inte längre spelbrädet.
+        * GameWindow updaterar inte längre spelbrädet.
         */
 
         /*
-        * MainWindow ska innehålla:
+        * GameWindow ska innehålla:
         1. GameGrid instans
         2. New Game -> SetupGameDialog
         3. Exit Game -> Environment.Exit(0);
         4. Presenterar game status         
          */
 
-        public MainWindow()
+        public GameWindow()
         {
             InitializeComponent();
         }
 
-        public void StartGame(Player player1, Player player2)
+        public void StartGame(Player blackPlayer, Player whitePlayer)
         {
-            WhiteName = player1.Name;
-            BlackName = player2.Name;
+            BlackName = blackPlayer.Name;
+            BlackScore = bScore;
+
+            WhiteName = whitePlayer.Name;
+            WhiteScore = wScore;
+
             GameGrid grid = new GameGrid();
-            MainWindow._GameManager = new GameManager(player1, player2, grid.UpdateGameBoard);
-            MainWindow._GameManager.Play();
+            _GameManager = new GameManager(blackPlayer, whitePlayer, this.UpdateGameStats, grid.UpdateGameBoard);
+            _GameManager.Play();
         }
 
+        public void UpdateGameStats(int round, Player blackPlayer, Player whitePlayer)
+        {
+            RoundNum = round;
+            BlackScore = blackPlayer.numOfDisks;
+            WhiteScore = whitePlayer.numOfDisks;
+        }
 
         //while (true)
         //{
@@ -103,7 +149,7 @@ namespace OthelloPresentation.Views
 
         //    if (_GameManager.skippedRounds == 2)
         //    {
-        //        if (_GameManager.player1.numOfDisks == _GameManager.player2.numOfDisks)
+        //        if (_GameManager.blackPlayer.numOfDisks == _GameManager.whitePlayer.numOfDisks)
         //        {
         //            DrawnDialog drawnDialog = new DrawnDialog();
         //            drawnDialog.ShowDialog();
@@ -111,7 +157,7 @@ namespace OthelloPresentation.Views
         //        else
         //        {
         //            WinnerDialog winnerDialog = new WinnerDialog();
-        //            winnerDialog.WinnerMessage = ((_GameManager.player1.numOfDisks > _GameManager.player2.numOfDisks) ? _GameManager.player1.Name : _GameManager.player2.Name) + "wins!";
+        //            winnerDialog.WinnerMessage = ((_GameManager.blackPlayer.numOfDisks > _GameManager.whitePlayer.numOfDisks) ? _GameManager.blackPlayer.Name : _GameManager.whitePlayer.Name) + "wins!";
         //            winnerDialog.ShowDialog();
         //        }
         //    }

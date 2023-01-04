@@ -15,32 +15,8 @@
             <RowDefinition MinHeight="80"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Wheat" BorderThickness="3" Margin="5 0 5 0">
-            <StackPanel>
-                <StackPanel.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <LinearGradientBrush.RelativeTransform>
-                            <TransformGroup>
-                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                <RotateTransform Angle="335" CenterX="0.5" CenterY="0.5"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </LinearGradientBrush.RelativeTransform>
-                        <GradientStop Color="White"/>
-                        <GradientStop Color="#FFFFE8A4" Offset="1"/>
-                    </LinearGradientBrush>
-                </StackPanel.Background>
-                <Label x:Name="lblBlack" Content="White:" FontSize="10" FontWeight="Bold"/>
-                <Label x:Name="lblName1" Content="Name" FontSize="10"/>
-                <Label x:Name="lblPlayerType" Content="PlayerType" FontSize="10"/>
-            </StackPanel>
-        </Border>
-        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom">
-            <TextBox x:Name="tbName1"/>
-            <ComboBox x:Name="cbPlayerType1" ItemsSource="{Binding Path=PlayerTypes}"/>
-        </StackPanel>
-        <Border BorderBrush="Black" BorderThickness="3" Grid.Column="2" Grid.Row="0" Margin="5 0 5 0" Background="Gray">
+        
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Column="0" Grid.Row="0" Margin="5 0 5 0" Background="Gray">
             <StackPanel>
                 <StackPanel.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -59,6 +35,32 @@
                 <Label x:Name="lblWhite" Content="Black:" FontSize="10" FontWeight="Bold" Foreground="White"/>
                 <Label x:Name="lblName2" Content="Name" FontSize="10" Foreground="White"/>
                     <Label x:Name="PlayerType2" Content="PlayerType" FontSize="10" Foreground="White"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom">
+            <TextBox x:Name="tbName1"/>
+            <ComboBox x:Name="cbPlayerType1" ItemsSource="{Binding Path=PlayerTypes}"/>
+        </StackPanel>
+        
+        <Border Grid.Column="2" Grid.Row="0" BorderBrush="Wheat" BorderThickness="3" Margin="5 0 5 0">
+            <StackPanel>
+                <StackPanel.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                <RotateTransform Angle="335" CenterX="0.5" CenterY="0.5"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="White"/>
+                        <GradientStop Color="#FFFFE8A4" Offset="1"/>
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+                <Label x:Name="lblBlack" Content="White:" FontSize="10" FontWeight="Bold"/>
+                <Label x:Name="lblName1" Content="Name" FontSize="10"/>
+                <Label x:Name="lblPlayerType" Content="PlayerType" FontSize="10"/>
             </StackPanel>
         </Border>
         <StackPanel Grid.Column="3" Grid.Row="0" VerticalAlignment="Bottom">

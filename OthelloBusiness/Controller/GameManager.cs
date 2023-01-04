@@ -5,37 +5,44 @@ namespace OthelloBusiness.Controller
     public class GameManager
     {
         public int skippedRounds;
+        private int round = 1;
 
         public Player? player;
-        public Player? player1;
-        public Player? player2;
+        public Player? blackPlayer;
+        public Player? whitePlayer;
 
         private bool isPlaying = true;
         //public Disk[,]? gameBoard = new Disk[8, 8];
         public List<Position>? validMoves;
         private Action<Disk[,], List<Position>> notifyGameBoardChanged;
+        private Action<int, Player, Player> notifyGameStatsChanged;
 
         private GameBoard? board;
 
-        //public GameManager(Player player1, Player player2, GameBoard grid)
+        //public GameManager(Player blackPlayer, Player whitePlayer, GameBoard grid)
         //{
         //    board = grid;
 
 
         //}
 
-        public GameManager(Player player1, Player player2, Action<Disk[,], List<Position>> notifyGameBoardChanged)
+        public GameManager(
+            Player blackPlayer,
+            Player whitePlayer,
+            Action<int, Player, Player> notifyGameStatsChanged,
+            Action<Disk[,], List<Position>> notifyGameBoardChanged)
         {
             board = new GameBoard();
-            this.player1 = player1;
-            this.player2 = player2;
+            this.blackPlayer = blackPlayer;
+            this.whitePlayer = whitePlayer;
 
             this.notifyGameBoardChanged = notifyGameBoardChanged;
+            this.notifyGameStatsChanged = notifyGameStatsChanged;
         }
 
         public async void Play()
         {
-            player = player1;
+            player = blackPlayer;
             UpdateObservers();
             while (isPlaying)
             {
@@ -52,8 +59,9 @@ namespace OthelloBusiness.Controller
                     numOfChanges = player.numOfChanges;
                     skippedRounds = 0;
                 }
-                player = player2.Name == player.Name ? player1 : player2;
+                player = whitePlayer.Name == player.Name ? blackPlayer : whitePlayer;
                 player.numOfDisks -= numOfChanges;
+                round++;
                 UpdateObservers();
                 if (skippedRounds == 2) break;
             }
@@ -74,6 +82,7 @@ namespace OthelloBusiness.Controller
                         gameBoardCopy[row, col] = board.gameBoard[row, col];
                 List<Position> validMoves = board.ValidMoves(player, board.gameBoard);
                 notifyGameBoardChanged(gameBoardCopy, validMoves);
+                notifyGameStatsChanged(round, blackPlayer, whitePlayer);
             }
         }
     }

@@ -5,7 +5,7 @@ using System.Windows;
 namespace OthelloPresentation.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for GameWindow.xaml
     /// </summary>
     public partial class SetupGameDialog : Window
     {
@@ -14,8 +14,8 @@ namespace OthelloPresentation.Views
         public enum PlayerType { HumanPlayer, ComputerPlayer }
 
         public ObservableCollection<PlayerType>? PlayerTypes { get; private set; } = new();
-        private Player? player1;
-        private Player? player2;
+        private Player? blackPlayer;
+        private Player? whitePlayer;
 
         public SetupGameDialog()
         {
@@ -30,16 +30,16 @@ namespace OthelloPresentation.Views
         {
             if (cbPlayerType1.SelectedIndex == 0)
             {
-                player1 = new HumanPlayer(tbName1.Text, Disk.BLACK);
+                blackPlayer = new HumanPlayer(tbName1.Text, Disk.BLACK);
             }
-            else player1 = new ComputerPlayer(tbName1.Text, Disk.BLACK);
+            else blackPlayer = new ComputerPlayer(tbName1.Text, Disk.BLACK);
             if (cbPlayerType2.SelectedIndex == 0)
             {
-                player2 = new HumanPlayer(tbName2.Text, Disk.WHITE);
+                whitePlayer = new HumanPlayer(tbName2.Text, Disk.WHITE);
             }
-            else player2 = new ComputerPlayer(tbName2.Text, Disk.WHITE);
+            else whitePlayer = new ComputerPlayer(tbName2.Text, Disk.WHITE);
 
-            ((MainWindow)App.Current.MainWindow).StartGame(player1, player2);
+            ((GameWindow)App.Current.MainWindow).StartGame(blackPlayer, whitePlayer);
         }
     }
 }
