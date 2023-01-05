@@ -15,9 +15,6 @@ namespace OthelloPresentation.Views
     public partial class GameGrid : UserControl
     {
         //INotifyCollectionChanged
-
-        public static int positionX { get; set; }
-        public static int positionY { get; set; }
         public static ObservableCollection<ObservableCollection<Brush>>? Board { get; set; }
 
         /// <summary>
