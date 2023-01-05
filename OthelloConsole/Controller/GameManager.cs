@@ -104,7 +104,7 @@ namespace OthelloConsole.Controller
                 //Console.WriteLine("\n");
             }
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.WriteLine("\n");
+            Console.WriteLine("");
         }
 
         private void ShowEndGameMessage()
@@ -114,13 +114,15 @@ namespace OthelloConsole.Controller
             Console.WriteLine(
                 $"Congratulations! " +
                 $"{(player1.numOfDisks > player2.numOfDisks ? player1.Name : player2.Name)}" +
-                $" won the game of Othello!");
+                $" won the game of Othello!\n\n\n");
         }
 
         private void ShowRoundInfo()
         {
             Console.WriteLine($"{player1.Disk}: {player1.numOfDisks}");
-            Console.WriteLine($"{player2.Disk}: {player2.numOfDisks}");
+            Console.WriteLine($"{player2.Disk}: {player2.numOfDisks}\n");
+            Console.WriteLine("---------------------------------------");
+
             Console.WriteLine($"\nRound: {roundCount++}");
             //Console.WriteLine(player.Name + " - " + player.Disk);
             Console.Write(player.Name + " - ");
@@ -129,6 +131,10 @@ namespace OthelloConsole.Controller
             {
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.DarkGray;
             }
             Console.Write(player.Disk);
             Console.BackgroundColor = ConsoleColor.Black;
