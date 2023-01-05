@@ -26,8 +26,6 @@ namespace OthelloPresentation.Views
         public ICommand GameExitCmd =>
         _gameExitCommand ??= new GameExitCommand();
 
-
-
         private int roundNum;
 
         public int RoundNum
@@ -89,23 +87,6 @@ namespace OthelloPresentation.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-
-
-        //public GameWindowViewModel ViewModel { get; private set; } = new GameWindowViewModel();
-
-        /*
-        * Ha denna bara i GameGrid?
-        * GameWindow updaterar inte längre spelbrädet.
-        */
-
-        /*
-        * GameWindow ska innehålla:
-        1. GameGrid instans
-        2. New Game -> SetupGameDialog
-        3. Exit Game -> Environment.Exit(0);
-        4. Presenterar game status         
-         */
-
         public GameWindow()
         {
             InitializeComponent();
@@ -120,49 +101,30 @@ namespace OthelloPresentation.Views
             WhiteScore = wScore;
 
             GameGrid grid = new GameGrid();
-            _GameManager = new GameManager(blackPlayer, whitePlayer, this.UpdateGameStats, grid.UpdateGameBoard);
+            _GameManager = new GameManager(blackPlayer, whitePlayer, this.UpdateGameStats, grid.UpdateGameBoard, this.ShowEndGameDialog);
             _GameManager.Play();
         }
 
         public void UpdateGameStats(int round, Player blackPlayer, Player whitePlayer)
         {
-            RoundNum = round;
+            if (RoundNum + 1 != 62) RoundNum = round;
             BlackScore = blackPlayer.numOfDisks;
             WhiteScore = whitePlayer.numOfDisks;
         }
 
-        //while (true)
-        //{
-        //    App.Current.Dispatcher.Invoke(() =>
-        //    {
-        //        // Skriv kod som manipulerar gr¨anssnittobjekt h¨ar.
-        //        Thread.Sleep(50);
-        //        UpdateGameBoard();
-        //        Thread.Sleep(50);
-        //        foreach (Position pos in _GameManager.validMoves)
-        //        {
-        //            GameGrid.Board[(int)pos.Y][(int)pos.X] = Brushes.LightGray;
-        //        }
-        //    });
-
-        //    //Tanken var att skapa gråa rutor för varje valid move
-
-        //    if (_GameManager.skippedRounds == 2)
-        //    {
-        //        if (_GameManager.blackPlayer.numOfDisks == _GameManager.whitePlayer.numOfDisks)
-        //        {
-        //            DrawnDialog drawnDialog = new DrawnDialog();
-        //            drawnDialog.ShowDialog();
-        //        }
-        //        else
-        //        {
-        //            WinnerDialog winnerDialog = new WinnerDialog();
-        //            winnerDialog.WinnerMessage = ((_GameManager.blackPlayer.numOfDisks > _GameManager.whitePlayer.numOfDisks) ? _GameManager.blackPlayer.Name : _GameManager.whitePlayer.Name) + "wins!";
-        //            winnerDialog.ShowDialog();
-        //        }
-        //    }
-        //}
-
-
+        public void ShowEndGameDialog(Player blackPlayer, Player whitePlayer)
+        {
+            if (blackPlayer.numOfDisks == whitePlayer.numOfDisks)
+            {
+                DrawnDialog drawnDialog = new DrawnDialog();
+                drawnDialog.ShowDialog();
+            }
+            else
+            {
+                WinnerDialog winnerDialog = new WinnerDialog();
+                winnerDialog.WinnerMessage = ((blackPlayer.numOfDisks > whitePlayer.numOfDisks) ? blackPlayer.Name : whitePlayer.Name) + " Wins!";
+                winnerDialog.ShowDialog();
+            }
+        }
     }
 }

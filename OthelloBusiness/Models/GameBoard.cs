@@ -108,8 +108,6 @@
                 LastDisk = gameBoard[y, x];
                 position.FlipPositions.Add(y);
                 position.FlipPositions.Add(x);
-                //position.flipPoints[0] = y;
-                //position.flipPoints[1] = x;
                 if (Directions.NORTH == directionType && y > 0) // NORTH
                     ValidMove(y, x, player, Directions.NORTH, gameBoard);
                 else if (Directions.NORTH_EAST == directionType && y > 0 && x < 7) // NORTH EAST
@@ -133,8 +131,6 @@
 
         public async Task<Disk[,]> MakeMoveAsync(Position pos, Disk[,] gameBoard, Player player)
         {
-            //return await Task.Run(() =>
-            //{
             player.numOfChanges = 0;
 
             gameBoard[pos.Y, pos.X] = player.Disk;
@@ -150,7 +146,6 @@
             player.numOfDisks += player.numOfChanges;
 
             return gameBoard;
-            //});
         }
     }
 }

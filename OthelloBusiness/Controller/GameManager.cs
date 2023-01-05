@@ -12,32 +12,28 @@ namespace OthelloBusiness.Controller
         public Player? whitePlayer;
 
         private bool isPlaying = true;
-        //public Disk[,]? gameBoard = new Disk[8, 8];
         public List<Position>? validMoves;
         private Action<Disk[,], List<Position>> notifyGameBoardChanged;
         private Action<int, Player, Player> notifyGameStatsChanged;
+        private Action<Player, Player> showEndGameDialog;
 
         private GameBoard? board;
-
-        //public GameManager(Player blackPlayer, Player whitePlayer, GameBoard grid)
-        //{
-        //    board = grid;
-
-
-        //}
 
         public GameManager(
             Player blackPlayer,
             Player whitePlayer,
             Action<int, Player, Player> notifyGameStatsChanged,
-            Action<Disk[,], List<Position>> notifyGameBoardChanged)
+            Action<Disk[,], List<Position>> notifyGameBoardChanged,
+            Action<Player, Player> showEndGameDialog)
         {
             board = new GameBoard();
             this.blackPlayer = blackPlayer;
             this.whitePlayer = whitePlayer;
 
+
             this.notifyGameBoardChanged = notifyGameBoardChanged;
             this.notifyGameStatsChanged = notifyGameStatsChanged;
+            this.showEndGameDialog = showEndGameDialog;
         }
 
         public async void Play()
@@ -54,8 +50,6 @@ namespace OthelloBusiness.Controller
                 {
                     Position position = await player.RequestMoveAsync(board.gameBoard, validMoves);
                     board.gameBoard = await board.MakeMoveAsync(position, board.gameBoard, player);
-                    //numOfChanges = board.MakeMove(player, move[0], move[1], gameBoard);
-                    //player.numOfDisks += numOfChanges + 1;
                     numOfChanges = player.numOfChanges;
                     skippedRounds = 0;
                 }
@@ -63,7 +57,11 @@ namespace OthelloBusiness.Controller
                 player.numOfDisks -= numOfChanges;
                 round++;
                 UpdateObservers();
-                if (skippedRounds == 2) break;
+                if (skippedRounds == 2)
+                {
+                    showEndGameDialog(whitePlayer, blackPlayer);
+                    break;
+                }
             }
         }
 

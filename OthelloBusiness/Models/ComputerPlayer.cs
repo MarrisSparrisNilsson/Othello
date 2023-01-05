@@ -14,7 +14,7 @@
         {
             return await Task.Run(() =>
             {
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 Position? position = null;
                 foreach (Position move in validMoves)
                 {

@@ -18,7 +18,7 @@ namespace OthelloPresentation.Views
 
         public static int positionX { get; set; }
         public static int positionY { get; set; }
-        public static ObservableCollection<ObservableCollection<Brush>> Board { get; set; }
+        public static ObservableCollection<ObservableCollection<Brush>>? Board { get; set; }
 
         /// <summary>
         /// This implementation is needed!
@@ -39,7 +39,6 @@ namespace OthelloPresentation.Views
             Board[3][4] = Brushes.Black;
             Board[4][3] = Brushes.Black;
             Board[4][4] = Brushes.White;
-            //UpdateGameBoard();
             InitializeComponent();
         }
 
@@ -53,25 +52,18 @@ namespace OthelloPresentation.Views
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(gGameBoard);
-            if (p.X > 60 && p.Y > 60)
+            if (p.X > 60 && p.Y > 60 && p.X < 540)
             {
-
-                double y = Math.Floor(Math.Ceiling((double)p.Y) / 60);
-                double x = Math.Floor(Math.Ceiling((double)p.X) / 60);
+                int y = (int)Math.Floor(Math.Ceiling((double)p.Y) / 60);
+                int x = (int)Math.Floor(Math.Ceiling((double)p.X) / 60);
 
                 if (x >= 1) x -= 1;
                 if (y >= 1) y -= 1;
 
-                GameWindow._GameManager.SetMove((int)x, (int)y);
-
-                //foreach (Position pos in GameWindow._GameManager.validMoves)
-                //{
-                //    if (pos.Y == y && pos.X == x)
-                //    {
-                //        (GameWindow._GameManager.player as HumanPlayer).X = (int)x;
-                //        (GameWindow._GameManager.player as HumanPlayer).Y = (int)y;
-                //    }
-                //}
+                if (Board[y][x] == Brushes.Gray)
+                {
+                    GameWindow._GameManager.SetMove(x, y);
+                }
             }
         }
 
@@ -94,7 +86,6 @@ namespace OthelloPresentation.Views
                         else Board[y][x] = Brushes.Green;
                     }
                 }
-
                 foreach (Position pos in validMoves)
                 {
                     Board[pos.Y][pos.X] = Brushes.Gray;
