@@ -4,15 +4,13 @@ namespace OthelloBusiness.Controller
 {
     public class GameManager
     {
-        public int skippedRounds;
         private int round = 1;
 
-        public Player? player;
-        public Player? blackPlayer;
-        public Player? whitePlayer;
+        private Player? player;
+        private Player? blackPlayer;
+        private Player? whitePlayer;
 
-        private bool isPlaying = true;
-        public List<Position>? validMoves;
+        private List<Position>? validMoves;
         private Action<Disk[,], List<Position>> notifyGameBoardChanged;
         private Action<int, Player, Player> notifyGameStatsChanged;
         private Action<Player, Player> showEndGameDialog;
@@ -29,8 +27,6 @@ namespace OthelloBusiness.Controller
             board = new GameBoard();
             this.blackPlayer = blackPlayer;
             this.whitePlayer = whitePlayer;
-
-
             this.notifyGameBoardChanged = notifyGameBoardChanged;
             this.notifyGameStatsChanged = notifyGameStatsChanged;
             this.showEndGameDialog = showEndGameDialog;
@@ -38,9 +34,10 @@ namespace OthelloBusiness.Controller
 
         public async void Play()
         {
+            int skippedRounds = 0;
             player = blackPlayer;
             UpdateObservers();
-            while (isPlaying)
+            while (true)
             {
                 int numOfChanges = 0;
 
