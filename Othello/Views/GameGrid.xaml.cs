@@ -32,10 +32,10 @@ namespace OthelloPresentation.Views
                     Board[row].Add(Brushes.Green);
                 }
             }
-            Board[3][3] = Brushes.White;
-            Board[3][4] = Brushes.Black;
-            Board[4][3] = Brushes.Black;
-            Board[4][4] = Brushes.White;
+            //Board[3][3] = Brushes.White;
+            //Board[3][4] = Brushes.Black;
+            //Board[4][3] = Brushes.Black;
+            //Board[4][4] = Brushes.White;
             InitializeComponent();
         }
 

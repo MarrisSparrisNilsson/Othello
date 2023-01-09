@@ -9,11 +9,13 @@
         WindowState="Maximized"
         Title="Othello"
         WindowStartupLocation="CenterScreen"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        MinHeight="700"
+        MinWidth="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}" d:DesignHeight="700" d:DesignWidth="806"
         >
-        <!--xmlns:local="clr-namespace:OthelloPresentation"-->
-    
-        <!--DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"-->
+    <!--xmlns:local="clr-namespace:OthelloPresentation"-->
+
+    <!--DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}"-->
     <!--<Window.DataContext>
         <viewmodels:GameWindowViewModel x:Name="dcViewModel"/>
     </Window.DataContext>-->
@@ -76,7 +78,11 @@
                 <Rectangle Fill="Black" Height="3"/>
             </StackPanel>
 
-            <local:GameGrid Grid.Column="1"></local:GameGrid>
+            <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="200" MinWidth="200">
+                <Label Content="{Binding Path=CurrentPlayer}" HorizontalAlignment="Center" FontSize="40" FontWeight="Bold" Margin="0 0 0 50" FontFamily="Yu Gothic UI"/>
+
+                <local:GameGrid x:Name="grid" MinHeight="200" MinWidth="200" Grid.Column="1"/>
+            </StackPanel>
 
             <!--<Border Grid.Column="1" BorderThickness="10" BorderBrush="black" Width="500" Height="500" Margin="50" Padding="20 8 0 0" Background="Green">
                 <Grid x:Name="gGameBoard" Margin="-80,-68,0,1" MouseDown="Grid_MouseDown">
@@ -103,7 +109,9 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     
-                    --><!--#region labels column 0--><!--
+                    -->
+            <!--#region labels column 0-->
+            <!--
                     <Label Content="1" FontSize="40" Grid.Column="0" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="2" FontSize="40" Grid.Column="0" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="3" FontSize="40" Grid.Column="0" Grid.Row="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
@@ -112,9 +120,11 @@
                     <Label Content="6" FontSize="40" Grid.Column="0" Grid.Row="6" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="7" FontSize="40" Grid.Column="0" Grid.Row="7" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="8" FontSize="40" Grid.Column="0" Grid.Row="8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                    --><!--#endregion-->
-                    
-                    <!--#region labls row 0--><!--
+                    -->
+            <!--#endregion-->
+
+            <!--#region labls row 0-->
+            <!--
                     <Label Content="1" FontSize="40" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="2" FontSize="40" Grid.Column="2" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="3" FontSize="40" Grid.Column="3" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
@@ -123,9 +133,11 @@
                     <Label Content="6" FontSize="40" Grid.Column="6" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="7" FontSize="40" Grid.Column="7" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <Label Content="8" FontSize="40" Grid.Column="8" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                    --><!--#endregion-->
-                    
-                    <!--#region row1--><!--
+                    -->
+            <!--#endregion-->
+
+            <!--#region row1-->
+            <!--
 
                     <Border Grid.Row="1" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[0][0]}"/>
@@ -151,9 +163,11 @@
                     <Border Grid.Row="1" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[0][7]}"/>
                     </Border>
-                    --><!--#endregion-->
+                    -->
+            <!--#endregion-->
 
-                    <!--#region row2--><!--
+            <!--#region row2-->
+            <!--
                     <Border Grid.Row="2" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[1][0]}"/>
                     </Border>
@@ -178,9 +192,11 @@
                     <Border Grid.Row="2" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[1][7]}"/>
                     </Border>
-                    --><!--#endregion-->
+                    -->
+            <!--#endregion-->
 
-                    <!--#region row3--><!--
+            <!--#region row3-->
+            <!--
                     <Border Grid.Row="3" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[2][0]}"/>
                     </Border>
@@ -205,9 +221,11 @@
                     <Border Grid.Row="3" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[2][7]}"/>
                     </Border>
-                    --><!--#endregion-->
+                    -->
+            <!--#endregion-->
 
-                    <!--#region row4--><!--
+            <!--#region row4-->
+            <!--
                     <Border Grid.Row="4" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[3][0]}"/>
                     </Border>
@@ -232,9 +250,11 @@
                     <Border Grid.Row="4" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[3][7]}"/>
                     </Border>
-                    --><!--#endregion-->
+                    -->
+            <!--#endregion-->
 
-                    <!--#region row5--><!--
+            <!--#region row5-->
+            <!--
                     <Border Grid.Row="5" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[4][0]}"/>
                     </Border>
@@ -259,9 +279,11 @@
                     <Border Grid.Row="5" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[4][7]}"/>
                     </Border>
-                    --><!--#endregion-->
+                    -->
+            <!--#endregion-->
 
-                    <!--#region row6--><!--
+            <!--#region row6-->
+            <!--
                     <Border Grid.Row="6" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[5][0]}"/>
                     </Border>
@@ -286,9 +308,11 @@
                     <Border Grid.Row="6" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[5][7]}"/>
                     </Border>
-                    --><!--#endregion-->
+                    -->
+            <!--#endregion-->
 
-                    <!--#region row7--><!--
+            <!--#region row7-->
+            <!--
                     <Border Grid.Row="7" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[6][0]}"/>
                     </Border>
@@ -313,9 +337,11 @@
                     <Border Grid.Row="7" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[6][7]}"/>
                     </Border>
-                    --><!--#endregion-->
+                    -->
+            <!--#endregion-->
 
-                    <!--#region row8--><!--
+            <!--#region row8-->
+            <!--
                     <Border Grid.Row="8" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[7][0]}"/>
                     </Border>
@@ -340,7 +366,9 @@
                     <Border Grid.Row="8" CornerRadius="2" BorderThickness="1 1 1 1" BorderBrush="black" Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Ellipse Width="50" Height="50" Fill="{Binding Path=Board[7][7]}"/>
                     </Border>
-                    --><!--#endregion--><!--
+                    -->
+            <!--#endregion-->
+            <!--
 
                 </Grid>
             </Border>-->

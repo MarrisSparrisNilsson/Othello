@@ -11,11 +11,8 @@
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
-            <Label Content="{Binding Path=WinnerMessage}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 20"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-
-                <Button  x:Name="btnOK" IsCancel="True" Margin="10 5" MinWidth="60">_OK</Button>
-            </StackPanel>
+            <Label Content="{Binding Path=WinnerMessage}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 20" FontSize="30"/>
+            <Button x:Name="btnOK" IsCancel="True" Margin="10 5" MinWidth="60">_OK</Button>
         </StackPanel>
     </Grid>
 </Window>

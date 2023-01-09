@@ -38,6 +38,18 @@ namespace OthelloPresentation.Views
             }
         }
 
+        private string currentPlayer;
+
+        public string CurrentPlayer
+        {
+            get { return currentPlayer; }
+            set
+            {
+                currentPlayer = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string whiteName;
         private string blackName;
 
@@ -100,20 +112,23 @@ namespace OthelloPresentation.Views
             WhiteName = whitePlayer.Name;
             WhiteScore = wScore;
 
-            GameGrid grid = new GameGrid();
-            _GameManager = new GameManager(blackPlayer, whitePlayer, this.UpdateGameStats, grid.UpdateGameBoard, this.ShowEndGameDialog);
+            _GameManager = new GameManager(blackPlayer, whitePlayer, grid.UpdateGameBoard, this.UpdateGameStats, this.ShowEndGameDialog);
             _GameManager.Play();
         }
 
-        public void UpdateGameStats(int round, Player blackPlayer, Player whitePlayer)
+        public void UpdateGameStats(int round, Player blackPlayer, Player whitePlayer, Disk currentDiskColor)
         {
             if (RoundNum + 1 != 62) RoundNum = round;
             BlackScore = blackPlayer.numOfDisks;
             WhiteScore = whitePlayer.numOfDisks;
+
+            CurrentPlayer = $"{(currentDiskColor == Disk.BLACK ? $"{blackPlayer.Name}" : $"{whitePlayer.Name}")} is playing...";
+
         }
 
         public void ShowEndGameDialog(Player blackPlayer, Player whitePlayer)
         {
+            CurrentPlayer = "";
             if (blackPlayer.numOfDisks == whitePlayer.numOfDisks)
             {
                 DrawnDialog drawnDialog = new DrawnDialog();

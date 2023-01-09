@@ -12,7 +12,7 @@ namespace OthelloBusiness.Controller
 
         private List<Position>? validMoves;
         private Action<Disk[,], List<Position>> notifyGameBoardChanged;
-        private Action<int, Player, Player> notifyGameStatsChanged;
+        private Action<int, Player, Player, Disk> notifyGameStatsChanged;
         private Action<Player, Player> showEndGameDialog;
 
         private GameBoard? board;
@@ -20,8 +20,8 @@ namespace OthelloBusiness.Controller
         public GameManager(
             Player blackPlayer,
             Player whitePlayer,
-            Action<int, Player, Player> notifyGameStatsChanged,
             Action<Disk[,], List<Position>> notifyGameBoardChanged,
+            Action<int, Player, Player, Disk> notifyGameStatsChanged,
             Action<Player, Player> showEndGameDialog)
         {
             board = new GameBoard();
@@ -77,7 +77,7 @@ namespace OthelloBusiness.Controller
                         gameBoardCopy[row, col] = board.gameBoard[row, col];
                 List<Position> validMoves = board.ValidMoves(player, board.gameBoard);
                 notifyGameBoardChanged(gameBoardCopy, validMoves);
-                notifyGameStatsChanged(round, blackPlayer, whitePlayer);
+                notifyGameStatsChanged(round, blackPlayer, whitePlayer, player.Disk);
             }
         }
     }
