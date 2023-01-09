@@ -41,7 +41,6 @@ namespace OthelloConsole.Views
                         othelloPlayer1 = new HumanPlayer(player1, Disk.BLACK);
                         othelloPlayer2 = new HumanPlayer(player2, Disk.WHITE);
 
-                        //gameManger = new GameManager(othelloPlayer1, othelloPlayer2);
                         break;
                     case "2":
                         Console.Write("Please enter player1's name: ");
@@ -49,16 +48,10 @@ namespace OthelloConsole.Views
 
                         othelloPlayer1 = new HumanPlayer(player1, Disk.BLACK);
                         othelloPlayer2 = new ComputerPlayer("Computer Player2", Disk.WHITE);
-
-                        //gameManger = new GameManager(othelloPlayer1, othelloPlayer2);
-
                         break;
                     case "3":
-
                         othelloPlayer1 = new ComputerPlayer("Computer Player1", Disk.BLACK);
                         othelloPlayer2 = new ComputerPlayer("Computer Player2", Disk.WHITE);
-
-                        //gameManger = new GameManager(othelloPlayer1, othelloPlayer2);
                         break;
                     default:
                         inValidOption = true;
