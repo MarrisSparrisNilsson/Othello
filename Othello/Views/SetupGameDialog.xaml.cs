@@ -9,8 +9,6 @@ namespace OthelloPresentation.Views
     /// </summary>
     public partial class SetupGameDialog : Window
     {
-
-
         public enum PlayerType { HumanPlayer, ComputerPlayer }
 
         public ObservableCollection<PlayerType>? PlayerTypes { get; private set; } = new();

@@ -112,6 +112,8 @@ namespace OthelloPresentation.Views
             WhiteName = whitePlayer.Name;
             WhiteScore = wScore;
 
+            RoundNum = 0;
+
             _GameManager = new GameManager(blackPlayer, whitePlayer, grid.UpdateGameBoard, this.UpdateGameStats, this.ShowEndGameDialog);
             _GameManager.Play();
         }
