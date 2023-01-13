@@ -18,11 +18,11 @@ namespace OthelloBusiness.Controller
         private GameBoard? board;
 
         public GameManager(
-            Player blackPlayer,
-            Player whitePlayer,
-            Action<Disk[,], List<Position>> notifyGameBoardChanged,
-            Action<int, Player, Player, Disk> notifyGameStatsChanged,
-            Action<Player, Player> showEndGameDialog)
+            Player? blackPlayer,
+            Player? whitePlayer,
+            Action<Disk[,], List<Position>>? notifyGameBoardChanged,
+            Action<int, Player, Player, Disk>? notifyGameStatsChanged,
+            Action<Player, Player>? showEndGameDialog)
         {
             board = new GameBoard();
             this.blackPlayer = blackPlayer;
