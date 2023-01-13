@@ -11,9 +11,9 @@ namespace OthelloBusiness.Controller
         private Player? whitePlayer;
 
         private List<Position>? validMoves;
-        private Action<Disk[,], List<Position>> notifyGameBoardChanged;
-        private Action<int, Player, Player, Disk> notifyGameStatsChanged;
-        private Action<Player, Player> showEndGameDialog;
+        private Action<Disk[,], List<Position>>? notifyGameBoardChanged;
+        private Action<int, Player, Player, Disk>? notifyGameStatsChanged;
+        private Action<Player, Player>? showEndGameDialog;
 
         private GameBoard? board;
 
@@ -46,7 +46,7 @@ namespace OthelloBusiness.Controller
                 else
                 {
                     Position position = await player.RequestMoveAsync(board.gameBoard, validMoves);
-                    board.gameBoard = await board.MakeMoveAsync(position, board.gameBoard, player);
+                    board.gameBoard = board.MakeMoveAsync(position, board.gameBoard, player);
                     numOfChanges = player.numOfChanges;
                     skippedRounds = 0;
                 }

@@ -2,7 +2,7 @@
 {
     public class ComputerPlayer : Player
     {
-        private Random random;
+        private Random? random;
         public ComputerPlayer(string name, Disk disk)
         {
             Name = name;

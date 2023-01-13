@@ -2,7 +2,7 @@
 {
     public class Position
     {
-        public List<int> FlipPositions { get; set; }
+        public List<int>? FlipPositions { get; set; }
 
         public int X { get; set; }
 

@@ -38,9 +38,9 @@ namespace OthelloPresentation.Views
             }
         }
 
-        private string currentPlayer;
+        private string? currentPlayer;
 
-        public string CurrentPlayer
+        public string? CurrentPlayer
         {
             get { return currentPlayer; }
             set
@@ -50,10 +50,10 @@ namespace OthelloPresentation.Views
             }
         }
 
-        private string whiteName;
-        private string blackName;
+        private string? whiteName;
+        private string? blackName;
 
-        public string WhiteName
+        public string? WhiteName
         {
             get { return whiteName; }
             set
@@ -62,7 +62,7 @@ namespace OthelloPresentation.Views
                 OnPropertyChanged();
             }
         }
-        public string BlackName
+        public string? BlackName
         {
             get { return blackName; }
             set
@@ -94,7 +94,7 @@ namespace OthelloPresentation.Views
             }
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

@@ -2,8 +2,8 @@
 {
     public class GameBoard
     {
-        private Disk LastDisk = Disk.BLANK;
-        private List<Position> validMoves;
+        private Disk? LastDisk = Disk.BLANK;
+        private List<Position>? validMoves;
         private Position? position = null;
         public Disk[,]? gameBoard = new Disk[8, 8];
 
@@ -129,7 +129,7 @@
             }
         }
 
-        public async Task<Disk[,]> MakeMoveAsync(Position pos, Disk[,] gameBoard, Player player)
+        public Disk[,] MakeMoveAsync(Position pos, Disk[,] gameBoard, Player player)
         {
             player.numOfChanges = 0;
 

@@ -2,8 +2,8 @@
 {
     public class GameBoard
     {
-        private Disk LastDisk = Disk.BLANK;
-        private List<Position> validMoves;
+        private Disk? LastDisk = Disk.BLANK;
+        private List<Position>? validMoves;
         private Position? position = null;
 
         public GameBoard()
