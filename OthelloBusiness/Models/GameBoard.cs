@@ -38,6 +38,7 @@
                 {
                     if (player.Disk == gameBoard[y, x])
                     {
+                        #region Search Directions
                         if (y > 0) // NORTH
                             ValidMove(y, x, player, Directions.NORTH, gameBoard);
                         if (y > 0 && x < 7) // NORTH EAST
@@ -54,10 +55,10 @@
                             ValidMove(y, x, player, Directions.WEST, gameBoard);
                         if (y > 0 && x > 0) // NORTH WEST
                             ValidMove(y, x, player, Directions.NORTH_WEST, gameBoard);
+                        #endregion
                     }
                 }
             }
-
             return OrganizedList(validMoves);
         }
 
@@ -105,6 +106,7 @@
         /// </param>
         private void ValidMove(int y, int x, Player player, Directions directionType, Disk[,] gameBoard)
         {
+            #region Search Directions
             if (Directions.NORTH == directionType) // NORTH
                 y--;
             else if (Directions.NORTH_EAST == directionType) // NORTH EAST
@@ -121,6 +123,7 @@
                 x--;
             else if (Directions.NORTH_WEST == directionType) // NORTH WEST
             { y--; x--; }
+            #endregion
 
             if (gameBoard[y, x] == Disk.BLANK)
             {
@@ -142,6 +145,7 @@
                 position.FlipPositions.Add(y);
                 position.FlipPositions.Add(x);
 
+                #region Search Directions
                 if (Directions.NORTH == directionType && y > 0) // NORTH
                     ValidMove(y, x, player, Directions.NORTH, gameBoard);
                 else if (Directions.NORTH_EAST == directionType && y > 0 && x < 7) // NORTH EAST
@@ -158,6 +162,7 @@
                     ValidMove(y, x, player, Directions.WEST, gameBoard);
                 else if (Directions.NORTH_WEST == directionType && y > 0 && x > 0) // NORTH WEST
                     ValidMove(y, x, player, Directions.NORTH_WEST, gameBoard);
+                #endregion
 
                 LastDisk = Disk.BLANK;
                 position = null;

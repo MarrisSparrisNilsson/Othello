@@ -14,20 +14,20 @@ namespace OthelloPresentation.Views
     public partial class GameWindow : Window, INotifyPropertyChanged
     {
         public static GameManager? _GameManager { get; set; }
+        public event PropertyChangedEventHandler? PropertyChanged;
 
+        #region Commands
         private ICommand? _newGameCommand;
         public ICommand NewGameCmd =>
         _newGameCommand ??= new NewGameCommand();
 
         private ICommand? _gameExitCommand;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         public ICommand GameExitCmd =>
         _gameExitCommand ??= new GameExitCommand();
+        #endregion
 
+        #region Round_Props
         private int roundNum;
-
         public int RoundNum
         {
             get { return roundNum; }
@@ -37,9 +37,11 @@ namespace OthelloPresentation.Views
                 OnPropertyChanged();
             }
         }
+        #endregion
+
+        #region PlayerDetail_Props
 
         private string? currentPlayer;
-
         public string? CurrentPlayer
         {
             get { return currentPlayer; }
@@ -51,8 +53,6 @@ namespace OthelloPresentation.Views
         }
 
         private string? whiteName;
-        private string? blackName;
-
         public string? WhiteName
         {
             get { return whiteName; }
@@ -62,6 +62,8 @@ namespace OthelloPresentation.Views
                 OnPropertyChanged();
             }
         }
+
+        private string? blackName;
         public string? BlackName
         {
             get { return blackName; }
@@ -73,8 +75,6 @@ namespace OthelloPresentation.Views
         }
 
         private int wScore = 0;
-        private int bScore = 0;
-
         public int WhiteScore
         {
             get { return wScore; }
@@ -84,6 +84,8 @@ namespace OthelloPresentation.Views
                 OnPropertyChanged();
             }
         }
+
+        private int bScore = 0;
         public int BlackScore
         {
             get { return bScore; }
@@ -94,17 +96,19 @@ namespace OthelloPresentation.Views
             }
         }
 
+        #endregion
+
+        public GameWindow()
+        {
+            InitializeComponent();
+        }
+
         /// <summary>
         /// Metod för att notifiera GUIt om att en property's värde har ändrats
         /// </summary>
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public GameWindow()
-        {
-            InitializeComponent();
         }
 
         /// <summary>

@@ -1,10 +1,8 @@
 ﻿namespace OthelloBusiness.Models
 {
-    // <summary>
-    /// Beskriv metoden h ̈ar
+    /// <summary>
+    /// Denna klass är en förälderklass till HumanPlayer och ComputerPlayer
     /// </summary>
-    /// <param name="paramname"> Beskriv parameter h ̈ar </param>
-    /// <returns> Beskriv returv ̈ardet h ̈ar </returns>
     public abstract class Player
     {
         protected object? threadLock = new object();
@@ -16,18 +14,24 @@
 
         public Disk Disk { get; set; }
 
-        // <summary>
-        /// Beskriv metoden h ̈ar
+        /// <summary>
+        /// Denna abstrakta metod används av båda spelarna ber om att få göra ett drag.
         /// </summary>
-        /// <param name="paramname"> Beskriv parameter h ̈ar </param>
-        /// <returns> Beskriv returv ̈ardet h ̈ar </returns>
+        /// <param name="gameBoard" name="validMoves">
+        /// Parametern gameBoard innehåller spelbrädets aktuella tillstånd.
+        /// Parametern validMoves innehåller de möjliga dragen som spelaren kan göra utifrån spelbrädets aktuella tillstånd.
+        /// </param>
+        /// <returns>Det som returneras är den postition på spelbrädet som spelaren har valt att lägga brickan på</returns>
         public abstract Task<Position> RequestMoveAsync(Disk[,] gameBoard, List<Position> validMoves);
 
-        // <summary>
-        /// Beskriv metoden h ̈ar
+        /// <summary>
+        /// SetMove är metoden som gör det möjligt för HumanPlayer att göra sitt drag och efteråt göra så att 
+        /// spelet fortsätter sin exekvering efteråt.
         /// </summary>
-        /// <param name="paramname"> Beskriv parameter h ̈ar </param>
-        /// <returns> Beskriv returv ̈ardet h ̈ar </returns>
+        /// <param name="x" name="y"> 
+        /// Parameter x representerar x-koordinaten som användaren valde att lägga sin bricka på spelbrädet.
+        /// Parameter y representerar y-koordinaten som användaren valde att lägga sin bricka på spelbrädet.
+        /// </param>
         public virtual void SetMove(int x, int y) { }
     }
 }
