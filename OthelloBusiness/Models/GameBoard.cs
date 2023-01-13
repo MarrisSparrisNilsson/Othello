@@ -69,7 +69,7 @@
             return filteredList;
         }
 
-        public void ValidMove(int y, int x, Player player, Directions directionType, Disk[,] gameBoard)
+        private void ValidMove(int y, int x, Player player, Directions directionType, Disk[,] gameBoard)
         {
             if (Directions.NORTH == directionType) // NORTH
                 y--;
@@ -129,7 +129,7 @@
             }
         }
 
-        public Disk[,] MakeMoveAsync(Position pos, Disk[,] gameBoard, Player player)
+        public Disk[,] MakeMove(Position pos, Disk[,] gameBoard, Player player)
         {
             player.numOfChanges = 0;
 

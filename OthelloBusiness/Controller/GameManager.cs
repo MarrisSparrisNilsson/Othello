@@ -46,7 +46,7 @@ namespace OthelloBusiness.Controller
                 else
                 {
                     Position position = await player.RequestMoveAsync(board.gameBoard, validMoves);
-                    board.gameBoard = board.MakeMoveAsync(position, board.gameBoard, player);
+                    board.gameBoard = board.MakeMove(position, board.gameBoard, player);
                     numOfChanges = player.numOfChanges;
                     skippedRounds = 0;
                 }
