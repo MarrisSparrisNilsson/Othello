@@ -10,16 +10,11 @@ using System.Windows.Media;
 namespace OthelloPresentation.Views
 {
     /// <summary>
-    /// Interaction logic for GameGrid.xaml
+    /// Interaktionslogik för GameGrid.xaml
     /// </summary>
     public partial class GameGrid : UserControl
     {
-        //INotifyCollectionChanged
         public static ObservableCollection<ObservableCollection<Brush>>? Board { get; set; }
-
-        /// <summary>
-        /// This implementation is needed!
-        /// </summary>
 
         public GameGrid()
         {
@@ -35,11 +30,15 @@ namespace OthelloPresentation.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Grid_MouseDown är ett event som lyssnar på var någonstans på spelbrädet som den mänskliga spelaren klickar med musen.
+        /// </summary>
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(gGameBoard);
             if (p.X > 60 && p.Y > 60 && p.X < 540)
             {
+                // Konverterar om koordinaterna för musklicket till exakta koordinater som matchar spelbrädets koordinater.
                 int y = (int)Math.Floor(Math.Ceiling((double)p.Y) / 60);
                 int x = (int)Math.Floor(Math.Ceiling((double)p.X) / 60);
 
@@ -48,11 +47,19 @@ namespace OthelloPresentation.Views
 
                 if (Board[y][x] == Brushes.Gray)
                 {
-                    GameWindow._GameManager.SetMove(x, y);
+                    GameWindow._GameManager.SetMove(x, y); // Återvänder till GameManager när HumanPlayer valt sitt drag.
                 }
             }
         }
 
+        /// <summary>
+        /// UpdateGameBoard updaterar spelbrädet och färglägger spelbrädets brickor så att det 
+        /// överrensstämmer med spelbrädets aktuella tillstånd.
+        /// </summary>
+        /// <param name="gameBoardCopy" name="validMoves">
+        /// Parametern gameBoardCopy tar in en kopia av det nuvarande spelbrädets tillstånd.
+        /// Parametern validMoves används för att måla ut de positioner som spelaren potentiellt kan lägga sitt nästa drag på.
+        /// </param>
         public void UpdateGameBoard(Disk[,] gameBoardCopy, List<Position> validMoves)
         {
             Application.Current.Dispatcher.Invoke(() =>

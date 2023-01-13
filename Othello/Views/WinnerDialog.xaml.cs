@@ -5,7 +5,7 @@ using System.Windows;
 namespace OthelloPresentation.Views
 {
     /// <summary>
-    /// Interaction logic for WinnerDialog.xaml
+    /// Interaktionslogik för WinnerDialog.xaml
     /// </summary>
     public partial class WinnerDialog : Window, INotifyPropertyChanged
     {
@@ -22,11 +22,15 @@ namespace OthelloPresentation.Views
                 OnPropertyChanged();
             }
         }
+
         public WinnerDialog()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Metod för att notifiera GUIt om att en property's värde har ändrats
+        /// </summary>
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

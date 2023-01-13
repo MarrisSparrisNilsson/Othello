@@ -2,6 +2,10 @@
 
 namespace OthelloBusiness.Controller
 {
+    /// <summary>
+    /// GameManager är klassen som det pågående spelet Othello. Gång på gång tillåter den båda spelarna att utföra sin runda och håller 
+    /// samtidigt reda på spelets tillstånd.
+    /// </summary>
     public class GameManager
     {
         private int round = 1;
@@ -32,6 +36,9 @@ namespace OthelloBusiness.Controller
             this.showEndGameDialog = showEndGameDialog;
         }
 
+        /// <summary>
+        /// Play metoden startar spelet och tillåter gång på gång de båda spelarna att utföra sin runda.
+        /// </summary>
         public async void Play()
         {
             int skippedRounds = 0;
@@ -62,11 +69,22 @@ namespace OthelloBusiness.Controller
             }
         }
 
+        /// <summary>
+        /// SetMove är metoden som gör det möjligt för HumanPlayer att göra sitt drag och efteråt göra så att spelet fortsätter sin exekvering efteråt.
+        /// </summary>
+        /// <param name="x" name="y"> 
+        /// Parameter x representerar x-koordinaten som användaren valde att lägga sin bricka på spelbrädet.
+        /// Parameter y representerar y-koordinaten som användaren valde att lägga sin bricka på spelbrädet.
+        /// </param>
         public void SetMove(int x, int y)
         {
             player.SetMove(x, y);
         }
 
+        /// <summary>
+        /// UpdateObservers innehåller delegates vars uppgift är att skicka ny information 
+        /// som skall visas i GUIt efter varje ändring som görs på spelbrädet.
+        /// </summary>
         private void UpdateObservers()
         {
             if (notifyGameBoardChanged != null)

@@ -5,7 +5,7 @@ using System.Windows;
 namespace OthelloPresentation.Views
 {
     /// <summary>
-    /// Interaction logic for GameWindow.xaml
+    /// Interaktionslogik för SetupGameDialog.xaml
     /// </summary>
     public partial class SetupGameDialog : Window
     {
@@ -24,6 +24,10 @@ namespace OthelloPresentation.Views
             cbPlayerType2.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Detta är en metod som lyssnar efter när användaren klickar på start knappen inuti SetupGameDialog
+        /// och vidarebefodrar konfigurationen från textrutorna och komboboxen till GameWindows StartGame metod.
+        /// </summary>
         private void btnDialogStart_Click(object sender, RoutedEventArgs e)
         {
             if (cbPlayerType1.SelectedIndex == 0)

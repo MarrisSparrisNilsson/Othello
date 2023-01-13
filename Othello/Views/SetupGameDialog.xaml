@@ -4,6 +4,7 @@
         Title="SetupGame" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
         MinWidth="400" MinHeight="200" MaxHeight="300" MaxWidth="600" Width="500"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    
     <Grid Margin="15" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -37,6 +38,7 @@
                     <Label x:Name="PlayerType2" Content="PlayerType" FontSize="10" Foreground="White"/>
             </StackPanel>
         </Border>
+        
         <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom">
             <TextBox x:Name="tbName1"/>
             <ComboBox x:Name="cbPlayerType1" ItemsSource="{Binding Path=PlayerTypes}"/>
@@ -63,6 +65,7 @@
                 <Label x:Name="lblPlayerType" Content="PlayerType" FontSize="10"/>
             </StackPanel>
         </Border>
+        
         <StackPanel Grid.Column="3" Grid.Row="0" VerticalAlignment="Bottom">
             <TextBox x:Name="tbName2"/>
             <ComboBox x:Name="cbPlayerType2" ItemsSource="{Binding Path=PlayerTypes}"/>

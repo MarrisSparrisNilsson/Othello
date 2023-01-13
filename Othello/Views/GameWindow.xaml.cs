@@ -9,7 +9,7 @@ using System.Windows.Input;
 namespace OthelloPresentation.Views
 {
     /// <summary>
-    /// Interaction logic for GameWindow.xaml
+    /// Interaktionslogik för GameWindow.xaml
     /// </summary>
     public partial class GameWindow : Window, INotifyPropertyChanged
     {
@@ -94,6 +94,9 @@ namespace OthelloPresentation.Views
             }
         }
 
+        /// <summary>
+        /// Metod för att notifiera GUIt om att en property's värde har ändrats
+        /// </summary>
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -104,6 +107,13 @@ namespace OthelloPresentation.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Startar ett spel genom att anropa Play metoden i GameManager och sätter start konfiguration till GUI element.
+        /// </summary>
+        /// <param name="blackPlayer" name="whitePlayer">
+        /// Parametern blackPlayer innehåller information om den svarta spelaren.
+        /// Parametern whitekPlayer innehåller information om den vita spelaren.
+        /// </param>
         public void StartGame(Player blackPlayer, Player whitePlayer)
         {
             BlackName = blackPlayer.Name;
@@ -118,6 +128,15 @@ namespace OthelloPresentation.Views
             _GameManager.Play();
         }
 
+        /// <summary>
+        /// Updaterar GUI komponenter med numret på den aktuella rundan och spelarnas poäng.
+        /// </summary>
+        /// <param name="round" name="blackPlayer" name="whitePlayer" name="currentDiskColor">
+        /// Parametern round innehåller numret på den nya rundan.
+        /// Parametern blackPlayer innehåller information om den svarta spelaren.
+        /// Parametern whitekPlayer innehåller information om den vita spelaren.
+        /// Parametern currentDiskColor representerar färgen på brickan som tillhör spelaren som härnäst ska utföra sitt drag.
+        /// </param>
         public void UpdateGameStats(int round, Player blackPlayer, Player whitePlayer, Disk currentDiskColor)
         {
             if (RoundNum + 1 != 62) RoundNum = round;
@@ -128,6 +147,15 @@ namespace OthelloPresentation.Views
 
         }
 
+        /// <summary>
+        /// Beroende på poängen för de båda spelarna så visas olika dialoger.
+        /// Om poängen är lika visas DrawnDialog som talar om att spelet blivit oavgjort
+        /// Om någon spelare har fler än den andre så visas en WinnerDialog som talar om vilken spelare som har vunnit.
+        /// </summary>
+        /// <param name="blackPlayer" name="whitePlayer">
+        /// Parametern blackPlayer innehåller information om den svarta spelaren.
+        /// Parametern whitekPlayer innehåller information om den vita spelaren.
+        /// </param>
         public void ShowEndGameDialog(Player blackPlayer, Player whitePlayer)
         {
             CurrentPlayer = "";

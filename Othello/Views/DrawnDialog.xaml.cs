@@ -3,10 +3,13 @@
 namespace OthelloPresentation.Views
 {
     /// <summary>
-    /// Interaction logic for DrawDialog.xaml
+    /// Interaktionslogik för DrawnDialog.xaml
     /// </summary>
     public partial class DrawnDialog : Window
     {
+        /// <summary>
+        /// Startar upp DrawnDialog
+        /// </summary>
         public DrawnDialog()
         {
             InitializeComponent();
