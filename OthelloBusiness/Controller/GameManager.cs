@@ -57,7 +57,7 @@ namespace OthelloBusiness.Controller
                     numOfChanges = player.numOfChanges;
                     skippedRounds = 0;
                 }
-                player = whitePlayer.Name == player.Name ? blackPlayer : whitePlayer;
+                player = (player == whitePlayer) ? blackPlayer : whitePlayer;
                 player.numOfDisks -= numOfChanges;
                 round++;
                 UpdateObservers();
